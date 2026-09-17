@@ -3,7 +3,7 @@ import os
 os.environ["VLLM_NO_USAGE_STATS"] = "1"
 os.environ["DO_NOT_TRACK"] = "1"
 
-CACHE_ROOT = "YOUR PATH"
+CACHE_ROOT = "/home/ec2-user/COPSD/.cache"
 
 # ====== Hugging Face ======
 os.environ["HF_HOME"] = f"{CACHE_ROOT}/huggingface"
@@ -16,15 +16,13 @@ os.environ["VLLM_CACHE_ROOT"] = f"{CACHE_ROOT}/vllm"
 
 import argparse
 import json
-from pathlib import Path
 from collections import Counter
+from pathlib import Path
 
 from datasets import load_dataset
-from vllm import LLM, SamplingParams
-from transformers import AutoTokenizer
-
 from math_verify import parse, verify
-
+from transformers import AutoTokenizer
+from vllm import LLM, SamplingParams
 
 LANGUAGE_PROMPTS = {
     # ============================================================
@@ -82,7 +80,6 @@ LANGUAGE_PROMPTS = {
         "instruction": "โปรดให้เหตุผลทีละขั้นตอน และใส่คำตอบสุดท้ายของคุณไว้ใน \\boxed{}",
         "think_prefix": "ตามคำขอ ฉันจะเริ่มคิดเป็นภาษาไทย",
     },
-
     # ============================================================
     # AfriMGSM African languages, ISO 639-3 uppercase keys
     # ============================================================
@@ -163,7 +160,6 @@ LANGUAGE_TO_AFRIMGSM_CONFIG = {
     "ENG": "eng",
     "FR": "fra",
     "FRA": "fra",
-
     # African languages, ISO 639-3
     "AMH": "amh",
     "EWE": "ewe",
@@ -258,7 +254,9 @@ def get_afrimgsm_ground_truth(example: dict) -> str:
         return str(example["answer_number"])
     if "answer" in example and example["answer"] is not None:
         return str(example["answer"])
-    raise KeyError(f"Cannot find ground-truth answer in example keys: {list(example.keys())}")
+    raise KeyError(
+        f"Cannot find ground-truth answer in example keys: {list(example.keys())}"
+    )
 
 
 def build_qwen3_prompt(
@@ -382,8 +380,22 @@ def process_outputs_and_save(
     total_correct_per_problem = 0
 
     print("\nProcessing results...")
-    for idx, (output, prompt, problem, gt_answer, question_id, extra_fields) in enumerate(
-        zip(outputs, all_prompts, all_problems, all_gt_answers, all_question_ids, all_extra_fields)
+    for idx, (
+        output,
+        prompt,
+        problem,
+        gt_answer,
+        question_id,
+        extra_fields,
+    ) in enumerate(
+        zip(
+            outputs,
+            all_prompts,
+            all_problems,
+            all_gt_answers,
+            all_question_ids,
+            all_extra_fields,
+        )
     ):
         generations = []
         predicted_answers = []
@@ -397,7 +409,9 @@ def process_outputs_and_save(
             is_correct = grade_answer(predicted_answer, gt_answer)
 
             generations.append(generated_text)
-            predicted_answers.append(predicted_answer if predicted_answer else "[No boxed answer found]")
+            predicted_answers.append(
+                predicted_answer if predicted_answer else "[No boxed answer found]"
+            )
             is_correct_list.append(is_correct)
             is_formatted_list.append(is_formatted)
 
@@ -465,7 +479,9 @@ def process_outputs_and_save(
     pass_at_n_pct = pass_at_n / num_problems * 100 if num_problems > 0 else 0.0
     average_at_n_pct = total_correct_per_problem / total * 100 if total > 0 else 0.0
     majority_vote_correct_count = sum(1 for r in results if r["majority_vote_correct"])
-    majority_vote_at_n_pct = majority_vote_correct_count / num_problems * 100 if num_problems > 0 else 0.0
+    majority_vote_at_n_pct = (
+        majority_vote_correct_count / num_problems * 100 if num_problems > 0 else 0.0
+    )
 
     print("\n" + "=" * 70)
     print("FINAL RESULTS")
@@ -479,7 +495,9 @@ def process_outputs_and_save(
     print(f"Total solutions: {total}")
     print("\nMetrics:")
     print(f"  Pass@{val_n}: {pass_at_n_pct:.2f}% ({pass_at_n}/{num_problems})")
-    print(f"  Average@{val_n}: {average_at_n_pct:.2f}% ({total_correct_per_problem}/{total})")
+    print(
+        f"  Average@{val_n}: {average_at_n_pct:.2f}% ({total_correct_per_problem}/{total})"
+    )
     print(
         f"  Majority Vote@{val_n}: {majority_vote_at_n_pct:.2f}% "
         f"({majority_vote_correct_count}/{num_problems})"
@@ -552,7 +570,9 @@ def run_generation(
     print("=" * 70 + "\n")
 
     if lora_request is not None:
-        return llm.generate(all_prompts, sampling_params, lora_request=lora_request, use_tqdm=True)
+        return llm.generate(
+            all_prompts, sampling_params, lora_request=lora_request, use_tqdm=True
+        )
     return llm.generate(all_prompts, sampling_params, use_tqdm=True)
 
 
@@ -578,9 +598,9 @@ def evaluate_polymath(
     if language not in LANGUAGE_PROMPTS:
         raise ValueError(f"Unsupported language code: {language}")
 
-    print(f"\n{'='*70}")
+    print(f"\n{'=' * 70}")
     print("EVALUATION CONFIGURATION")
-    print(f"{'='*70}")
+    print(f"{'=' * 70}")
     print("Dataset: POLYMATH")
     print(f"Language: {language.upper()}")
     print(f"PolyMath split: {polymath_split}")
@@ -592,7 +612,7 @@ def evaluate_polymath(
     print(f"Presence Penalty: {presence_penalty}")
     print(f"Max New Tokens: {max_new_tokens}")
     print(f"Val-N (solutions per problem): {val_n}")
-    print(f"{'='*70}\n")
+    print(f"{'=' * 70}\n")
 
     dataset = load_dataset("Qwen/PolyMath", language.lower(), split=polymath_split)
     print(
@@ -703,9 +723,9 @@ def evaluate_afrimgsm(
 
     dataset_config = LANGUAGE_TO_AFRIMGSM_CONFIG[lang]
 
-    print(f"\n{'='*70}")
+    print(f"\n{'=' * 70}")
     print("EVALUATION CONFIGURATION")
-    print(f"{'='*70}")
+    print(f"{'=' * 70}")
     print("Dataset: AfriMGSM")
     print(f"Language: {lang}")
     print(f"AfriMGSM config: {dataset_config}")
@@ -718,7 +738,7 @@ def evaluate_afrimgsm(
     print(f"Presence Penalty: {presence_penalty}")
     print(f"Max New Tokens: {max_new_tokens}")
     print(f"Val-N (solutions per problem): {val_n}")
-    print(f"{'='*70}\n")
+    print(f"{'=' * 70}\n")
 
     dataset = load_dataset("masakhane/afrimgsm", dataset_config, split=afrimgsm_split)
     print(
@@ -950,7 +970,10 @@ def main():
             f"Supported prompt languages: {sorted(LANGUAGE_PROMPTS)}"
         )
 
-    if args.benchmark == "afrimgsm" and args.language not in LANGUAGE_TO_AFRIMGSM_CONFIG:
+    if (
+        args.benchmark == "afrimgsm"
+        and args.language not in LANGUAGE_TO_AFRIMGSM_CONFIG
+    ):
         raise ValueError(
             f"Unsupported AfriMGSM language code: {args.language}. "
             f"Supported AfriMGSM languages: {sorted(LANGUAGE_TO_AFRIMGSM_CONFIG)}"
@@ -959,18 +982,20 @@ def main():
     if args.benchmark == "polymath":
         polymath_lang = normalize_polymath_language(args.language)
         if polymath_lang != args.language:
-            print(f"[INFO] Normalizing PolyMath language {args.language} -> {polymath_lang}")
+            print(
+                f"[INFO] Normalizing PolyMath language {args.language} -> {polymath_lang}"
+            )
             args.language = polymath_lang
 
     if args.checkpoint_dir is not None:
         checkpoint_path = Path(args.checkpoint_dir)
         if not checkpoint_path.exists():
-            print(f"\n{'='*70}")
+            print(f"\n{'=' * 70}")
             print("ERROR: Checkpoint directory does not exist")
-            print(f"{'='*70}")
+            print(f"{'=' * 70}")
             print(f"Provided checkpoint directory: {args.checkpoint_dir}")
             print("This directory does not exist.")
-            print(f"{'='*70}\n")
+            print(f"{'=' * 70}\n")
             raise SystemExit(1)
 
     if args.output_file is None:
@@ -1042,14 +1067,18 @@ def main():
         try:
             from vllm.lora.request import LoRARequest
 
-            adapter_safetensors = Path(args.checkpoint_dir) / "adapter_model.safetensors"
+            adapter_safetensors = (
+                Path(args.checkpoint_dir) / "adapter_model.safetensors"
+            )
             adapter_bin = Path(args.checkpoint_dir) / "adapter_model.bin"
 
             if adapter_safetensors.exists() or adapter_bin.exists():
                 lora_request = LoRARequest("checkpoint_lora", 1, args.checkpoint_dir)
                 print(f"✓ Successfully created LoRA request for: {args.checkpoint_dir}")
             else:
-                print(f"Warning: No LoRA adapter weights found at {args.checkpoint_dir}")
+                print(
+                    f"Warning: No LoRA adapter weights found at {args.checkpoint_dir}"
+                )
                 print("Continuing with base model only...")
         except ImportError:
             print("Warning: Could not import LoRARequest. Running without LoRA.")

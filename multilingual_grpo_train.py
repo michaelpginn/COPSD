@@ -3,7 +3,7 @@ import os
 os.environ["VLLM_NO_USAGE_STATS"] = "1"
 os.environ["DO_NOT_TRACK"] = "1"
 
-CACHE_ROOT = "YOUR PATH"
+CACHE_ROOT = "/home/ec2-user/COPSD/.cache"
 
 # ====== Hugging Face ======
 os.environ["HF_HOME"] = f"{CACHE_ROOT}/huggingface"
@@ -14,18 +14,17 @@ os.environ["HF_DATASETS_CACHE"] = f"{CACHE_ROOT}/huggingface/datasets"
 # ====== vLLM======
 os.environ["VLLM_CACHE_ROOT"] = f"{CACHE_ROOT}/vllm"
 
-import wandb
 import re
-from pathlib import Path
 from dataclasses import dataclass, field
+from pathlib import Path
 
-from math_verify import parse, verify
+import wandb
 from datasets import load_dataset
+from math_verify import parse, verify
 from transformers import AutoTokenizer
-
 from trl import (
-    GRPOTrainer,
     GRPOConfig,
+    GRPOTrainer,
     ModelConfig,
     ScriptArguments,
     TrlParser,
@@ -94,7 +93,6 @@ LANGUAGE_PROMPTS = {
         "instruction": "โปรดให้เหตุผลทีละขั้นตอน และใส่คำตอบสุดท้ายของคุณไว้ใน \\boxed{}",
         "think_prefix": "ตามคำขอ ฉันจะเริ่มคิดเป็นภาษาไทย",
     },
-
     # ============================================================
     # AfriMGSM African languages, ISO 639-3 uppercase keys
     # ============================================================
@@ -202,7 +200,9 @@ class CustomScriptArguments(ScriptArguments):
     )
     train_language: str = field(
         default="ES",
-        metadata={"help": "Target language for GRPO training, e.g. ES, DE, FR, JA, ZH."},
+        metadata={
+            "help": "Target language for GRPO training, e.g. ES, DE, FR, JA, ZH."
+        },
     )
     require_translation_ok: bool = field(
         default=True,
@@ -256,7 +256,9 @@ def _preprocess_for_parse(answer):
     """Convert ratio notation a:b → \\frac{a}{b} so math_verify can parse it."""
     if answer is None:
         return None
-    ratio_match = re.fullmatch(r"\s*(-?\d+(?:\.\d+)?)\s*:\s*(-?\d+(?:\.\d+)?)\s*", answer)
+    ratio_match = re.fullmatch(
+        r"\s*(-?\d+(?:\.\d+)?)\s*:\s*(-?\d+(?:\.\d+)?)\s*", answer
+    )
     if ratio_match:
         return rf"\frac{{{ratio_match.group(1)}}}{{{ratio_match.group(2)}}}"
     return answer
@@ -366,14 +368,17 @@ if __name__ == "__main__":
     lr_str = f"{training_args.learning_rate:.0e}".replace("e-0", "e-")
     num_processes = int(os.environ.get("WORLD_SIZE", 1))
     effective_batch_size = (
-        training_args.per_device_train_batch_size * training_args.gradient_accumulation_steps * num_processes
+        training_args.per_device_train_batch_size
+        * training_args.gradient_accumulation_steps
+        * num_processes
     )
 
     if script_args.run_config:
         full_wandb_run_name = f"{script_args.run_config}_{target_lang}_lr{lr_str}_bs{effective_batch_size}"
         if not training_args.output_dir.endswith(script_args.run_config):
             training_args.output_dir = str(
-                Path(training_args.output_dir) / f"{script_args.run_config}_{target_lang.lower()}"
+                Path(training_args.output_dir)
+                / f"{script_args.run_config}_{target_lang.lower()}"
             )
     else:
         model_name = model_args.model_name_or_path.split("/")[-1]
@@ -384,11 +389,13 @@ if __name__ == "__main__":
             f"gen{training_args.num_generations}_"
             f"temp{training_args.temperature}"
         )
-        training_args.output_dir = str(Path(training_args.output_dir) / target_lang.lower())
+        training_args.output_dir = str(
+            Path(training_args.output_dir) / target_lang.lower()
+        )
 
-    print(f"\n{'='*80}")
+    print(f"\n{'=' * 80}")
     print("RUN CONFIGURATION")
-    print(f"{'='*80}")
+    print(f"{'=' * 80}")
     print(f"WandB Run Name: {full_wandb_run_name}")
     print(f"Output Directory: {training_args.output_dir}")
     print(f"Target Language: {target_lang}")
@@ -397,7 +404,7 @@ if __name__ == "__main__":
     print(f"Temperature: {training_args.temperature}")
     print(f"Max Prompt Length: {training_args.max_prompt_length}")
     print(f"Max Completion Length: {training_args.max_completion_length}")
-    print(f"{'='*80}\n")
+    print(f"{'=' * 80}\n")
 
     ################
     # WandB Initialization
@@ -456,10 +463,12 @@ if __name__ == "__main__":
     else:
         model_dtype = torch.bfloat16
 
-    print(f"\n{'='*80}")
+    print(f"\n{'=' * 80}")
     print(f"Loading model with dtype: {model_dtype}")
-    print(f"Using attention implementation: {model_args.attn_implementation or 'flash_attention_2'}")
-    print(f"{'='*80}\n")
+    print(
+        f"Using attention implementation: {model_args.attn_implementation or 'flash_attention_2'}"
+    )
+    print(f"{'=' * 80}\n")
 
     model_kwargs = dict(
         revision=model_args.model_revision,
@@ -502,13 +511,13 @@ if __name__ == "__main__":
     )
     after_count = len(train_dataset)
 
-    print(f"\n{'='*80}")
+    print(f"\n{'=' * 80}")
     print("DATASET SUMMARY")
-    print(f"{'='*80}")
+    print(f"{'=' * 80}")
     print(f"Original examples: {before_count}")
     print(f"Usable examples for {target_lang}: {after_count}")
     print(f"Dropped examples: {before_count - after_count}")
-    print(f"{'='*80}\n")
+    print(f"{'=' * 80}\n")
 
     if after_count == 0:
         raise ValueError(
@@ -521,7 +530,9 @@ if __name__ == "__main__":
         train_language=target_lang,
         use_think_hack=script_args.use_think_hack,
     )
-    train_dataset = train_dataset.map(format_prompt, remove_columns=train_dataset.column_names)
+    train_dataset = train_dataset.map(
+        format_prompt, remove_columns=train_dataset.column_names
+    )
 
     split_dataset = train_dataset.train_test_split(test_size=0.007, seed=42)
     train_dataset = split_dataset["train"]
@@ -543,11 +554,17 @@ if __name__ == "__main__":
     resume_from_checkpoint = None
     if os.path.isdir(training_args.output_dir):
         checkpoints = sorted(
-            [d for d in os.listdir(training_args.output_dir) if d.startswith("checkpoint-")],
+            [
+                d
+                for d in os.listdir(training_args.output_dir)
+                if d.startswith("checkpoint-")
+            ],
             key=lambda x: int(x.split("-")[-1]),
         )
         if checkpoints:
-            resume_from_checkpoint = os.path.join(training_args.output_dir, checkpoints[-1])
+            resume_from_checkpoint = os.path.join(
+                training_args.output_dir, checkpoints[-1]
+            )
             print(f"Resuming from checkpoint: {resume_from_checkpoint}")
 
     trainer.train(resume_from_checkpoint=resume_from_checkpoint)

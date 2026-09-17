@@ -43,7 +43,7 @@ MAX_NEW_TOKENS=1024
 # =========================
 # Paths
 # =========================
-PROJECT_ROOT="YOUR PATH"
+PROJECT_ROOT="/home/ec2-user/COPSD"
 MODEL_ROOT="${PROJECT_ROOT}/african_langs_models"
 
 RUN_CONFIG_PREFIX="qwen3_8b"

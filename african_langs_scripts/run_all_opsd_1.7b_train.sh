@@ -40,8 +40,8 @@ MODEL_NAME="Qwen/Qwen3-1.7B"
 PORT=12949
 
 # GPUs used by accelerate.
-CUDA_DEVICES="0,1,2,3"
-NUM_PROCESSES=4
+CUDA_DEVICES="0,1,2,3,4,5,6,7"
+NUM_PROCESSES=8
 
 # Training hyperparameters
 LEARNING_RATE="5e-6"

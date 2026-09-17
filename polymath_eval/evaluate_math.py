@@ -1,10 +1,9 @@
 import os
 
-
 os.environ["VLLM_NO_USAGE_STATS"] = "1"
 os.environ["DO_NOT_TRACK"] = "1"
 
-CACHE_ROOT = "/nfs/gdata/rzhao/.cache"
+CACHE_ROOT = "/home/ec2-user/COPSD/.cache"
 
 # ====== Hugging Face ======
 os.environ["HF_HOME"] = f"{CACHE_ROOT}/huggingface"
@@ -15,18 +14,15 @@ os.environ["HF_DATASETS_CACHE"] = f"{CACHE_ROOT}/huggingface/datasets"
 # ====== vLLM======
 os.environ["VLLM_CACHE_ROOT"] = f"{CACHE_ROOT}/vllm"
 
-import torch
 import argparse
 import json
-from pathlib import Path
 from collections import Counter
+from pathlib import Path
 
 from datasets import load_dataset
-from vllm import LLM, SamplingParams
-from transformers import AutoTokenizer
-
 from math_verify import parse, verify
-
+from transformers import AutoTokenizer
+from vllm import LLM, SamplingParams
 
 LANGUAGE_PROMPTS = {
     "EN": {
@@ -233,9 +229,9 @@ def evaluate_polymath(
     language: str = "EN",
     polymath_split: str = "top",
 ):
-    print(f"\n{'='*70}")
+    print(f"\n{'=' * 70}")
     print("EVALUATION CONFIGURATION")
-    print(f"{'='*70}")
+    print(f"{'=' * 70}")
     print("Dataset: POLYMATH")
     print(f"Language: {language.upper()}")
     print(f"PolyMath split: {polymath_split}")
@@ -247,7 +243,7 @@ def evaluate_polymath(
     print(f"Presence Penalty: {presence_penalty}")
     print(f"Max New Tokens: {max_new_tokens}")
     print(f"Val-N (solutions per problem): {val_n}")
-    print(f"{'='*70}\n")
+    print(f"{'=' * 70}\n")
 
     dataset = load_dataset("Qwen/PolyMath", language.lower(), split=polymath_split)
     print(
@@ -318,7 +314,9 @@ def evaluate_polymath(
     print("=" * 70 + "\n")
 
     if lora_request is not None:
-        outputs = llm.generate(all_prompts, sampling_params, lora_request=lora_request, use_tqdm=True)
+        outputs = llm.generate(
+            all_prompts, sampling_params, lora_request=lora_request, use_tqdm=True
+        )
     else:
         outputs = llm.generate(all_prompts, sampling_params, use_tqdm=True)
 
@@ -338,7 +336,9 @@ def evaluate_polymath(
             is_correct = grade_answer(predicted_answer, gt_answer)
 
             generations.append(generated_text)
-            predicted_answers.append(predicted_answer if predicted_answer else "[No boxed answer found]")
+            predicted_answers.append(
+                predicted_answer if predicted_answer else "[No boxed answer found]"
+            )
             is_correct_list.append(is_correct)
             is_formatted_list.append(is_formatted)
 
@@ -348,7 +348,9 @@ def evaluate_polymath(
 
         majority_vote_correct = False
         if num_formatted > 0:
-            formatted_predictions = [pred for pred, fmt in zip(predicted_answers, is_formatted_list) if fmt]
+            formatted_predictions = [
+                pred for pred, fmt in zip(predicted_answers, is_formatted_list) if fmt
+            ]
             if formatted_predictions:
                 most_common_answer = Counter(formatted_predictions).most_common(1)[0][0]
                 majority_vote_correct = grade_answer(most_common_answer, gt_answer)
@@ -417,7 +419,9 @@ def evaluate_polymath(
     print(f"Total solutions: {total}")
     print("\nMetrics:")
     print(f"  Pass@{val_n}: {pass_at_n_pct:.2f}% ({pass_at_n}/{num_problems})")
-    print(f"  Average@{val_n}: {average_at_n_pct:.2f}% ({total_correct_per_problem}/{total})")
+    print(
+        f"  Average@{val_n}: {average_at_n_pct:.2f}% ({total_correct_per_problem}/{total})"
+    )
     print(
         f"  Majority Vote@{val_n}: {majority_vote_at_n_pct:.2f}% "
         f"({majority_vote_correct_count}/{num_problems})"
@@ -507,7 +511,10 @@ def main():
         help="Enable Qwen3 thinking mode.",
     )
     parser.add_argument(
-        "--no_thinking", dest="enable_thinking", action="store_false", help="Disable Qwen3 thinking mode"
+        "--no_thinking",
+        dest="enable_thinking",
+        action="store_false",
+        help="Disable Qwen3 thinking mode",
     )
     parser.add_argument(
         "--temperature",
@@ -585,12 +592,12 @@ def main():
     if args.checkpoint_dir is not None:
         checkpoint_path = Path(args.checkpoint_dir)
         if not checkpoint_path.exists():
-            print(f"\n{'='*70}")
+            print(f"\n{'=' * 70}")
             print("ERROR: Checkpoint directory does not exist")
-            print(f"{'='*70}")
+            print(f"{'=' * 70}")
             print(f"Provided checkpoint directory: {args.checkpoint_dir}")
             print("This directory does not exist.")
-            print(f"{'='*70}\n")
+            print(f"{'=' * 70}\n")
             raise SystemExit(1)
 
     if args.output_file is None:
@@ -650,14 +657,18 @@ def main():
         try:
             from vllm.lora.request import LoRARequest
 
-            adapter_safetensors = Path(args.checkpoint_dir) / "adapter_model.safetensors"
+            adapter_safetensors = (
+                Path(args.checkpoint_dir) / "adapter_model.safetensors"
+            )
             adapter_bin = Path(args.checkpoint_dir) / "adapter_model.bin"
 
             if adapter_safetensors.exists() or adapter_bin.exists():
                 lora_request = LoRARequest("checkpoint_lora", 1, args.checkpoint_dir)
                 print(f"✓ Successfully created LoRA request for: {args.checkpoint_dir}")
             else:
-                print(f"Warning: No LoRA adapter weights found at {args.checkpoint_dir}")
+                print(
+                    f"Warning: No LoRA adapter weights found at {args.checkpoint_dir}"
+                )
                 print("Continuing with base model only...")
         except ImportError:
             print("Warning: Could not import LoRARequest. Running without LoRA.")

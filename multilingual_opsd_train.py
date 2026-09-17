@@ -3,7 +3,7 @@ import os
 os.environ["VLLM_NO_USAGE_STATS"] = "1"
 os.environ["DO_NOT_TRACK"] = "1"
 
-CACHE_ROOT = "YOUR PATH"
+CACHE_ROOT = "/home/ec2-user/COPSD/.cache"
 
 # ====== Hugging Face ======
 os.environ["HF_HOME"] = f"{CACHE_ROOT}/huggingface"
@@ -20,7 +20,6 @@ from pathlib import Path
 import wandb
 from datasets import load_dataset
 from transformers import AutoTokenizer, GenerationConfig
-
 from trl import (
     LogCompletionsCallback,
     ModelConfig,
@@ -31,6 +30,7 @@ from trl import (
     get_quantization_config,
 )
 from trl.experimental.gold import GOLDConfig
+
 from multilingual_opsd_trainer import OPSDTrainer
 
 # Enable logging in a Hugging Face Space
@@ -137,9 +137,9 @@ class CustomScriptArguments(ScriptArguments):
         default=False,
         metadata={
             "help": "whether allow the student model to generate thinking traces."
-        }   
+        },
     )
-    
+
     include_problem_en: bool = field(
         default=True,
         metadata={
@@ -201,14 +201,17 @@ if __name__ == "__main__":
     lr_str = f"{training_args.learning_rate:.0e}".replace("e-0", "e-")
     num_processes = int(os.environ.get("WORLD_SIZE", 1))
     effective_batch_size = (
-        training_args.per_device_train_batch_size * training_args.gradient_accumulation_steps * num_processes
+        training_args.per_device_train_batch_size
+        * training_args.gradient_accumulation_steps
+        * num_processes
     )
 
     if script_args.run_config:
         full_wandb_run_config = f"{script_args.run_config}_{target_lang}_lr{lr_str}_bs{effective_batch_size}"
         if not training_args.output_dir.endswith(script_args.run_config):
             training_args.output_dir = str(
-                Path(training_args.output_dir) / f"{script_args.run_config}_{target_lang.lower()}"
+                Path(training_args.output_dir)
+                / f"{script_args.run_config}_{target_lang.lower()}"
             )
     else:
         model_name = model_args.model_name_or_path.split("/")[-1]
@@ -230,16 +233,18 @@ if __name__ == "__main__":
         if not script_args.include_reference_solution_en:
             full_wandb_run_config += "_no_en_solution"
 
-    print(f"\n{'='*80}")
+    print(f"\n{'=' * 80}")
     print("RUN CONFIGURATION")
-    print(f"{'='*80}")
+    print(f"{'=' * 80}")
     print(f"WandB Run Name: {full_wandb_run_config}")
     print(f"Output Directory: {training_args.output_dir}")
     print(f"Target Language: {target_lang}")
     print(f"Include English Problem: {script_args.include_problem_en}")
-    print(f"Include English Reference Solution: {script_args.include_reference_solution_en}")
+    print(
+        f"Include English Reference Solution: {script_args.include_reference_solution_en}"
+    )
     print(f"Translated Data Path: {translated_data_path}")
-    print(f"{'='*80}\n")
+    print(f"{'=' * 80}\n")
 
     ################
     # WandB Initialization
@@ -279,9 +284,13 @@ if __name__ == "__main__":
                 "num_processes": num_processes,
                 "use_tinker_loss": script_args.use_tinker_loss,
                 "fixed_teacher": script_args.fixed_teacher,
-                "top_k_loss": script_args.top_k_loss if script_args.top_k_loss > 0 else None,
+                "top_k_loss": script_args.top_k_loss
+                if script_args.top_k_loss > 0
+                else None,
                 "use_ema_teacher": script_args.use_ema_teacher,
-                "ema_decay": script_args.ema_decay if script_args.use_ema_teacher else None,
+                "ema_decay": script_args.ema_decay
+                if script_args.use_ema_teacher
+                else None,
             },
         )
 
@@ -308,10 +317,12 @@ if __name__ == "__main__":
     else:
         model_dtype = torch.bfloat16
 
-    print(f"\n{'='*80}")
+    print(f"\n{'=' * 80}")
     print(f"Loading model with dtype: {model_dtype}")
-    print(f"Using attention implementation: {model_args.attn_implementation or 'flash_attention_2'}")
-    print(f"{'='*80}\n")
+    print(
+        f"Using attention implementation: {model_args.attn_implementation or 'flash_attention_2'}"
+    )
+    print(f"{'=' * 80}\n")
 
     model_kwargs = dict(
         revision=model_args.model_revision,
@@ -340,16 +351,15 @@ if __name__ == "__main__":
     # Dataset
     ################
     training_args.presence_penalty = script_args.presence_penalty
-    
+
     # IMPORTANT: skip SFTTrainer's default text-field preprocessing.
     # Our multilingual collator consumes raw rows directly.
     training_args.dataset_kwargs = {"skip_prepare_dataset": True}
-    
-    
+
     # IMPORTANT: keep all raw columns for the custom multilingual collator.
     # Without this, Trainer may remove columns like problem_ewe before batching.
     training_args.remove_unused_columns = False
-    
+
     # if not hasattr(training_args, "dataset_text_field") or training_args.dataset_text_field is None:
     #     training_args.dataset_text_field = "problem"
 
@@ -366,19 +376,17 @@ if __name__ == "__main__":
         )
     )
 
-    train_dataset = train_dataset.map(
-        lambda ex: add_target_language(ex, target_lang)
-    )
+    train_dataset = train_dataset.map(lambda ex: add_target_language(ex, target_lang))
 
     after_count = len(train_dataset)
 
-    print(f"\n{'='*80}")
+    print(f"\n{'=' * 80}")
     print("DATASET SUMMARY")
-    print(f"{'='*80}")
+    print(f"{'=' * 80}")
     print(f"Original examples: {before_count}")
     print(f"Usable examples for {target_lang}: {after_count}")
     print(f"Dropped examples: {before_count - after_count}")
-    print(f"{'='*80}\n")
+    print(f"{'=' * 80}\n")
 
     if after_count == 0:
         raise ValueError(
@@ -397,12 +405,14 @@ if __name__ == "__main__":
         fixed_teacher=script_args.fixed_teacher,
         reason_first=script_args.reason_first,
         top_k_loss=script_args.top_k_loss if script_args.top_k_loss > 0 else None,
-        jsd_token_clip=script_args.jsd_token_clip if script_args.jsd_token_clip > 0 else None,
+        jsd_token_clip=script_args.jsd_token_clip
+        if script_args.jsd_token_clip > 0
+        else None,
         use_ema_teacher=script_args.use_ema_teacher,
         ema_decay=script_args.ema_decay,
         student_enable_thinking=script_args.student_enable_thinking,
         include_problem_en=script_args.include_problem_en,
-        include_reference_solution_en=script_args.include_reference_solution_en
+        include_reference_solution_en=script_args.include_reference_solution_en,
     )
 
     if training_args.eval_strategy != "no":
@@ -411,7 +421,9 @@ if __name__ == "__main__":
             do_sample=True,
             temperature=training_args.temperature,
         )
-        completions_callback = LogCompletionsCallback(trainer, generation_config, num_prompts=8)
+        completions_callback = LogCompletionsCallback(
+            trainer, generation_config, num_prompts=8
+        )
         trainer.add_callback(completions_callback)
 
     trainer.train()
