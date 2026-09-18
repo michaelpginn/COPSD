@@ -1,0 +1,403 @@
+/home/ec2-user/miniconda3/envs/opsd/lib/python3.10/site-packages/transformers/utils/hub.py:110: FutureWarning: Using `TRANSFORMERS_CACHE` is deprecated and will be removed in v5 of Transformers. Use `HF_HOME` instead.
+  warnings.warn(
+INFO 09-18 00:06:55 [__init__.py:216] Automatically detected platform cuda.
+Results will be saved to: eval_results/afrimgsm/amh/test/qwen3_1.7b_opsd_amh_step15_max4096_valn12.json
+
+======================================================================
+QWEN3 MATH EVALUATION
+======================================================================
+Benchmark: afrimgsm
+Language: AMH
+AfriMGSM split: test
+AfriMGSM config: amh
+Base model: Qwen/Qwen3-1.7B
+Checkpoint: /home/ec2-user/COPSD/african_langs_models/amh/qwen3_1.7b_amh_opsd_500_max2048_amh/checkpoint-15
+Thinking Mode: ENABLED ✓
+Max tokens: 4096
+Temperature: 1.0
+Top-p: 0.95
+Top-k: -1
+Min-p: 0.0
+Presence penalty: 0.0
+Num samples: All
+Val-N: 12
+Output file: eval_results/afrimgsm/amh/test/qwen3_1.7b_opsd_amh_step15_max4096_valn12.json
+GPU memory utilization: 0.9
+Tensor parallel size: 1
+======================================================================
+
+Loading model with vLLM from: Qwen/Qwen3-1.7B
+Auto-setting max_model_len to 40960 for thinking mode
+LoRA adapter path provided: /home/ec2-user/COPSD/african_langs_models/amh/qwen3_1.7b_amh_opsd_500_max2048_amh/checkpoint-15
+LoRA weights found. Enabling LoRA support...
+INFO 09-18 00:06:57 [utils.py:233] non-default args: {'trust_remote_code': True, 'max_model_len': 40960, 'distributed_executor_backend': 'mp', 'disable_log_stats': True, 'enforce_eager': True, 'enable_lora': True, 'max_lora_rank': 64, 'max_cpu_loras': 1, 'model': 'Qwen/Qwen3-1.7B'}
+The argument `trust_remote_code` is to be used with Auto classes. It has no effect here and is ignored.
+INFO 09-18 00:06:58 [model.py:547] Resolved architecture: Qwen3ForCausalLM
+`torch_dtype` is deprecated! Use `dtype` instead!
+INFO 09-18 00:06:58 [model.py:1510] Using max model len 40960
+INFO 09-18 00:06:58 [scheduler.py:205] Chunked prefill is enabled with max_num_batched_tokens=8192.
+WARNING 09-18 00:06:58 [lora.py:92] `lora_extra_vocab_size` is deprecated and will be removed in v0.12.0. Additional vocabulary support for LoRA adapters is being phased out.
+INFO 09-18 00:06:58 [__init__.py:381] Cudagraph is disabled under eager mode
+[1;36m(EngineCore_DP0 pid=42464)[0;0m INFO 09-18 00:06:59 [core.py:644] Waiting for init message from front-end.
+[1;36m(EngineCore_DP0 pid=42464)[0;0m INFO 09-18 00:06:59 [core.py:77] Initializing a V1 LLM engine (v0.11.0) with config: model='Qwen/Qwen3-1.7B', speculative_config=None, tokenizer='Qwen/Qwen3-1.7B', skip_tokenizer_init=False, tokenizer_mode=auto, revision=None, tokenizer_revision=None, trust_remote_code=True, dtype=torch.bfloat16, max_seq_len=40960, download_dir=None, load_format=auto, tensor_parallel_size=1, pipeline_parallel_size=1, data_parallel_size=1, disable_custom_all_reduce=False, quantization=None, enforce_eager=True, kv_cache_dtype=auto, device_config=cuda, structured_outputs_config=StructuredOutputsConfig(backend='auto', disable_fallback=False, disable_any_whitespace=False, disable_additional_properties=False, reasoning_parser=''), observability_config=ObservabilityConfig(show_hidden_metrics_for_version=None, otlp_traces_endpoint=None, collect_detailed_traces=None), seed=0, served_model_name=Qwen/Qwen3-1.7B, enable_prefix_caching=True, chunked_prefill_enabled=True, pooler_config=None, compilation_config={"level":0,"debug_dump_path":"","cache_dir":"","backend":"","custom_ops":[],"splitting_ops":null,"use_inductor":true,"compile_sizes":[],"inductor_compile_config":{"enable_auto_functionalized_v2":false},"inductor_passes":{},"cudagraph_mode":0,"use_cudagraph":true,"cudagraph_num_of_warmups":0,"cudagraph_capture_sizes":[],"cudagraph_copy_inputs":false,"full_cuda_graph":false,"use_inductor_graph_partition":false,"pass_config":{},"max_capture_size":0,"local_cache_dir":null}
+[1;36m(EngineCore_DP0 pid=42464)[0;0m WARNING 09-18 00:06:59 [multiproc_executor.py:720] Reducing Torch parallelism from 48 threads to 1 to avoid unnecessary CPU contention. Set OMP_NUM_THREADS in the external environment to tune this value as needed.
+[1;36m(EngineCore_DP0 pid=42464)[0;0m INFO 09-18 00:06:59 [shm_broadcast.py:289] vLLM message queue communication handle: Handle(local_reader_ranks=[0], buffer_handle=(1, 16777216, 10, 'psm_2ef836e4'), local_subscribe_addr='ipc:///tmp/4f6121f7-8c8b-48c6-ab92-41ac3bf3a42b', remote_subscribe_addr=None, remote_addr_ipv6=False)
+[1;36m(EngineCore_DP0 pid=42464)[0;0m INFO 09-18 00:07:01 [shm_broadcast.py:289] vLLM message queue communication handle: Handle(local_reader_ranks=[0], buffer_handle=(1, 10485760, 10, 'psm_49fa85d7'), local_subscribe_addr='ipc:///tmp/ebe7a971-590e-4a43-b861-b1e1045a88a4', remote_subscribe_addr=None, remote_addr_ipv6=False)
+[Gloo] Rank 0 is connected to 0 peer ranks. Expected number of connected peer ranks is : 0
+[Gloo] Rank 0 is connected to 0 peer ranks. Expected number of connected peer ranks is : 0
+[Gloo] Rank 0 is connected to 0 peer ranks. Expected number of connected peer ranks is : 0
+[Gloo] Rank 0 is connected to 0 peer ranks. Expected number of connected peer ranks is : 0
+[Gloo] Rank 0 is connected to 0 peer ranks. Expected number of connected peer ranks is : 0
+[Gloo] Rank 0 is connected to 0 peer ranks. Expected number of connected peer ranks is : 0
+[1;36m(EngineCore_DP0 pid=42464)[0;0m INFO 09-18 00:07:04 [parallel_state.py:1208] rank 0 in world size 1 is assigned as DP rank 0, PP rank 0, TP rank 0, EP rank 0
+[1;36m(EngineCore_DP0 pid=42464)[0;0m WARNING 09-18 00:07:04 [topk_topp_sampler.py:66] FlashInfer is not available. Falling back to the PyTorch-native implementation of top-p & top-k sampling. For the best performance, please install FlashInfer.
+[1;36m(EngineCore_DP0 pid=42464)[0;0m [1;36m(Worker pid=42470)[0;0m INFO 09-18 00:07:04 [gpu_model_runner.py:2602] Starting to load model Qwen/Qwen3-1.7B...
+[1;36m(EngineCore_DP0 pid=42464)[0;0m [1;36m(Worker pid=42470)[0;0m INFO 09-18 00:07:05 [gpu_model_runner.py:2634] Loading model from scratch...
+[1;36m(EngineCore_DP0 pid=42464)[0;0m [1;36m(Worker pid=42470)[0;0m INFO 09-18 00:07:05 [cuda.py:366] Using Flash Attention backend on V1 engine.
+[1;36m(EngineCore_DP0 pid=42464)[0;0m [1;36m(Worker pid=42470)[0;0m INFO 09-18 00:07:05 [weight_utils.py:392] Using model weights format ['*.safetensors']
+[1;36m(EngineCore_DP0 pid=42464)[0;0m [1;36m(Worker pid=42470)[0;0m Loading safetensors checkpoint shards:   0% Completed | 0/2 [00:00<?, ?it/s]
+[1;36m(EngineCore_DP0 pid=42464)[0;0m [1;36m(Worker pid=42470)[0;0m Loading safetensors checkpoint shards: 100% Completed | 2/2 [00:00<00:00,  2.09it/s]
+[1;36m(EngineCore_DP0 pid=42464)[0;0m [1;36m(Worker pid=42470)[0;0m Loading safetensors checkpoint shards: 100% Completed | 2/2 [00:00<00:00,  2.09it/s]
+[1;36m(EngineCore_DP0 pid=42464)[0;0m [1;36m(Worker pid=42470)[0;0m 
+[1;36m(EngineCore_DP0 pid=42464)[0;0m [1;36m(Worker pid=42470)[0;0m INFO 09-18 00:07:06 [default_loader.py:267] Loading weights took 0.99 seconds
+[1;36m(EngineCore_DP0 pid=42464)[0;0m [1;36m(Worker pid=42470)[0;0m INFO 09-18 00:07:06 [punica_selector.py:19] Using PunicaWrapperGPU.
+[1;36m(EngineCore_DP0 pid=42464)[0;0m [1;36m(Worker pid=42470)[0;0m INFO 09-18 00:07:07 [gpu_model_runner.py:2653] Model loading took 3.3454 GiB and 1.842635 seconds
+[1;36m(EngineCore_DP0 pid=42464)[0;0m [1;36m(Worker pid=42470)[0;0m INFO 09-18 00:07:10 [gpu_worker.py:298] Available KV cache memory: 30.74 GiB
+[1;36m(EngineCore_DP0 pid=42464)[0;0m INFO 09-18 00:07:10 [kv_cache_utils.py:1087] GPU KV cache size: 287,824 tokens
+[1;36m(EngineCore_DP0 pid=42464)[0;0m INFO 09-18 00:07:10 [kv_cache_utils.py:1091] Maximum concurrency for 40,960 tokens per request: 7.03x
+[1;36m(EngineCore_DP0 pid=42464)[0;0m [1;36m(Worker pid=42470)[0;0m WARNING 09-18 00:07:10 [cudagraph_dispatcher.py:106] cudagraph dispatching keys are not initialized. No cudagraph will be used.
+[1;36m(EngineCore_DP0 pid=42464)[0;0m INFO 09-18 00:07:10 [core.py:210] init engine (profile, create kv cache, warmup model) took 2.81 seconds
+[1;36m(EngineCore_DP0 pid=42464)[0;0m INFO 09-18 00:07:11 [__init__.py:381] Cudagraph is disabled under eager mode
+INFO 09-18 00:07:11 [llm.py:306] Supported_tasks: ['generate']
+
+======================================================================
+MODEL DTYPE INFORMATION
+======================================================================
+vLLM Model Config dtype: torch.bfloat16
+vLLM Model quantization: None
+KV cache dtype: auto
+======================================================================
+
+vLLM model loaded successfully!
+✓ Successfully created LoRA request for: /home/ec2-user/COPSD/african_langs_models/amh/qwen3_1.7b_amh_opsd_500_max2048_amh/checkpoint-15
+
+======================================================================
+EVALUATION CONFIGURATION
+======================================================================
+Dataset: AfriMGSM
+Language: AMH
+AfriMGSM config: amh
+Split: test
+Thinking Mode: ENABLED
+Temperature: 1.0
+Top-P: 0.95
+Top-K: -1
+Min-P: 0.0
+Presence Penalty: 0.0
+Max New Tokens: 4096
+Val-N (solutions per problem): 12
+======================================================================
+
+Loaded masakhane/afrimgsm config=amh split=test with 250 problems
+Evaluating on 250 problems with vLLM batch inference...
+
+Running vLLM batch inference on 250 problems...
+
+======================================================================
+GENERATION DTYPE CHECK
+======================================================================
+Model dtype: torch.bfloat16
+Quantization: None
+KV cache dtype: auto
+Using LoRA: True
+LoRA path: /home/ec2-user/COPSD/african_langs_models/amh/qwen3_1.7b_amh_opsd_500_max2048_amh/checkpoint-15
+======================================================================
+
+Adding requests:   0%|          | 0/250 [00:00<?, ?it/s]WARNING 09-18 00:07:13 [processor.py:215] vLLM has deprecated support for supporting different tokenizers for different LoRAs. By default, vLLM uses base model's tokenizer. If you are using a LoRA with its own tokenizer, consider specifying `--tokenizer [lora_path]` to use the LoRA tokenizer.
+Adding requests:  34%|███▍      | 85/250 [00:00<00:00, 847.33it/s]Adding requests:  71%|███████   | 177/250 [00:00<00:00, 889.45it/s]Adding requests: 100%|██████████| 250/250 [00:00<00:00, 410.52it/s]
+Processed prompts:   0%|          | 0/3000 [00:00<?, ?it/s, est. speed input: 0.00 toks/s, output: 0.00 toks/s]Processed prompts:   0%|          | 12/3000 [03:21<13:54:30, 16.76s/it, est. speed input: 19.57 toks/s, output: 88.64 toks/s]Processed prompts:   1%|          | 24/3000 [03:24<5:51:07,  7.08s/it, est. speed input: 30.89 toks/s, output: 200.28 toks/s]Processed prompts:   1%|          | 36/3000 [04:39<5:30:40,  6.69s/it, est. speed input: 37.64 toks/s, output: 260.95 toks/s]Processed prompts:   8%|▊         | 240/3000 [04:59<29:32,  1.56it/s, est. speed input: 255.07 toks/s, output: 2019.05 toks/s]Processed prompts:   8%|▊         | 240/3000 [05:09<29:32,  1.56it/s, est. speed input: 255.07 toks/s, output: 2019.05 toks/s]Processed prompts:   8%|▊         | 252/3000 [06:41<55:09,  1.20s/it, est. speed input: 199.46 toks/s, output: 1583.60 toks/s]Processed prompts:   9%|▉         | 264/3000 [07:30<1:07:04,  1.47s/it, est. speed input: 183.32 toks/s, output: 1435.71 toks/s]Processed prompts:   9%|▉         | 276/3000 [07:32<1:00:00,  1.32s/it, est. speed input: 189.72 toks/s, output: 1482.81 toks/s]Processed prompts:  10%|▉         | 288/3000 [09:11<1:44:37,  2.31s/it, est. speed input: 162.61 toks/s, output: 1283.18 toks/s]Processed prompts:  10%|█         | 300/3000 [09:17<1:30:06,  2.00s/it, est. speed input: 165.38 toks/s, output: 1314.14 toks/s]Processed prompts:  10%|█         | 312/3000 [09:29<1:21:14,  1.81s/it, est. speed input: 168.85 toks/s, output: 1317.57 toks/s]Processed prompts:  11%|█         | 324/3000 [09:31<1:04:23,  1.44s/it, est. speed input: 173.22 toks/s, output: 1355.73 toks/s]Processed prompts:  11%|█         | 336/3000 [09:32<49:46,  1.12s/it, est. speed input: 179.37 toks/s, output: 1397.73 toks/s]  Processed prompts:  12%|█▏        | 360/3000 [09:32<29:35,  1.49it/s, est. speed input: 191.13 toks/s, output: 1503.97 toks/s]Processed prompts:  17%|█▋        | 504/3000 [09:49<27:58,  1.49it/s, est. speed input: 265.95 toks/s, output: 2093.19 toks/s]Processed prompts:  17%|█▋        | 516/3000 [10:07<13:09,  3.15it/s, est. speed input: 258.38 toks/s, output: 2025.43 toks/s]Processed prompts:  18%|█▊        | 528/3000 [10:56<25:39,  1.61it/s, est. speed input: 243.92 toks/s, output: 1922.99 toks/s]Processed prompts:  18%|█▊        | 540/3000 [11:25<32:54,  1.25it/s, est. speed input: 240.00 toks/s, output: 1892.48 toks/s]Processed prompts:  18%|█▊        | 552/3000 [11:41<35:37,  1.15it/s, est. speed input: 242.40 toks/s, output: 1896.65 toks/s]Processed prompts:  19%|█▉        | 564/3000 [11:42<30:09,  1.35it/s, est. speed input: 247.03 toks/s, output: 1917.97 toks/s]Processed prompts:  19%|█▉        | 576/3000 [11:47<27:49,  1.45it/s, est. speed input: 252.30 toks/s, output: 1956.94 toks/s]Processed prompts:  20%|█▉        | 588/3000 [11:55<27:53,  1.44it/s, est. speed input: 254.23 toks/s, output: 1971.32 toks/s]Processed prompts:  20%|█▉        | 588/3000 [12:09<27:53,  1.44it/s, est. speed input: 254.23 toks/s, output: 1971.32 toks/s]Processed prompts:  20%|██        | 600/3000 [12:14<35:18,  1.13it/s, est. speed input: 252.30 toks/s, output: 1948.84 toks/s]Processed prompts:  20%|██        | 612/3000 [12:18<30:13,  1.32it/s, est. speed input: 254.73 toks/s, output: 1978.63 toks/s]Processed prompts:  20%|██        | 612/3000 [12:29<30:13,  1.32it/s, est. speed input: 254.73 toks/s, output: 1978.63 toks/s]Processed prompts:  21%|██        | 624/3000 [13:54<1:44:05,  2.63s/it, est. speed input: 231.14 toks/s, output: 1782.40 toks/s]Processed prompts:  21%|██        | 636/3000 [14:00<1:20:37,  2.05s/it, est. speed input: 233.04 toks/s, output: 1815.00 toks/s]Processed prompts:  22%|██▏       | 648/3000 [14:07<1:04:55,  1.66s/it, est. speed input: 234.55 toks/s, output: 1833.65 toks/s]Processed prompts:  22%|██▏       | 660/3000 [14:15<53:24,  1.37s/it, est. speed input: 237.08 toks/s, output: 1857.01 toks/s]  Processed prompts:  22%|██▏       | 672/3000 [14:19<41:17,  1.06s/it, est. speed input: 242.75 toks/s, output: 1888.37 toks/s]Processed prompts:  23%|██▎       | 684/3000 [14:20<30:27,  1.27it/s, est. speed input: 247.96 toks/s, output: 1915.46 toks/s]Processed prompts:  23%|██▎       | 696/3000 [14:24<24:20,  1.58it/s, est. speed input: 250.49 toks/s, output: 1940.26 toks/s]Processed prompts:  26%|██▋       | 792/3000 [15:15<20:31,  1.79it/s, est. speed input: 268.76 toks/s, output: 2114.00 toks/s]Processed prompts:  27%|██▋       | 804/3000 [15:25<21:36,  1.69it/s, est. speed input: 271.05 toks/s, output: 2125.77 toks/s]Processed prompts:  27%|██▋       | 816/3000 [15:31<20:56,  1.74it/s, est. speed input: 272.91 toks/s, output: 2135.30 toks/s]Processed prompts:  28%|██▊       | 828/3000 [15:53<29:00,  1.25it/s, est. speed input: 270.01 toks/s, output: 2118.25 toks/s]Processed prompts:  28%|██▊       | 840/3000 [16:23<40:51,  1.14s/it, est. speed input: 264.68 toks/s, output: 2083.40 toks/s]Processed prompts:  28%|██▊       | 852/3000 [16:45<46:00,  1.29s/it, est. speed input: 262.15 toks/s, output: 2068.58 toks/s]Processed prompts:  29%|██▉       | 864/3000 [16:46<35:37,  1.00s/it, est. speed input: 265.30 toks/s, output: 2092.06 toks/s]Processed prompts:  29%|██▉       | 876/3000 [16:50<29:34,  1.20it/s, est. speed input: 267.68 toks/s, output: 2106.18 toks/s]Processed prompts:  30%|██▉       | 888/3000 [17:13<39:34,  1.12s/it, est. speed input: 264.04 toks/s, output: 2076.47 toks/s]Processed prompts:  30%|███       | 900/3000 [18:00<1:06:03,  1.89s/it, est. speed input: 255.39 toks/s, output: 2001.19 toks/s]Processed prompts:  30%|███       | 912/3000 [18:09<54:26,  1.56s/it, est. speed input: 255.96 toks/s, output: 2015.56 toks/s]  Processed prompts:  31%|███       | 924/3000 [18:16<44:46,  1.29s/it, est. speed input: 259.76 toks/s, output: 2021.72 toks/s]Processed prompts:  31%|███       | 936/3000 [18:44<54:24,  1.58s/it, est. speed input: 257.25 toks/s, output: 2000.85 toks/s]Processed prompts:  32%|███▏      | 948/3000 [18:49<42:50,  1.25s/it, est. speed input: 260.09 toks/s, output: 2015.23 toks/s]Processed prompts:  32%|███▏      | 960/3000 [18:53<33:08,  1.03it/s, est. speed input: 262.06 toks/s, output: 2046.34 toks/s]Processed prompts:  32%|███▏      | 972/3000 [18:57<26:21,  1.28it/s, est. speed input: 263.59 toks/s, output: 2064.25 toks/s]Processed prompts:  33%|███▎      | 984/3000 [18:57<18:31,  1.81it/s, est. speed input: 265.68 toks/s, output: 2082.63 toks/s]Processed prompts:  34%|███▍      | 1032/3000 [18:57<06:53,  4.76it/s, est. speed input: 277.98 toks/s, output: 2176.64 toks/s]Processed prompts:  35%|███▍      | 1044/3000 [18:59<06:08,  5.31it/s, est. speed input: 282.02 toks/s, output: 2196.95 toks/s]Processed prompts:  35%|███▌      | 1056/3000 [19:04<07:41,  4.22it/s, est. speed input: 284.70 toks/s, output: 2210.19 toks/s]Processed prompts:  36%|███▌      | 1068/3000 [19:07<07:49,  4.11it/s, est. speed input: 286.25 toks/s, output: 2235.71 toks/s]Processed prompts:  36%|███▌      | 1080/3000 [19:13<10:07,  3.16it/s, est. speed input: 287.92 toks/s, output: 2251.92 toks/s]Processed prompts:  37%|███▋      | 1104/3000 [19:25<12:11,  2.59it/s, est. speed input: 291.78 toks/s, output: 2290.67 toks/s]Processed prompts:  37%|███▋      | 1116/3000 [19:33<14:07,  2.22it/s, est. speed input: 292.74 toks/s, output: 2294.53 toks/s]Processed prompts:  37%|███▋      | 1116/3000 [19:49<14:07,  2.22it/s, est. speed input: 292.74 toks/s, output: 2294.53 toks/s]Processed prompts:  38%|███▊      | 1128/3000 [20:12<35:39,  1.14s/it, est. speed input: 287.21 toks/s, output: 2252.44 toks/s]Processed prompts:  38%|███▊      | 1140/3000 [20:55<54:45,  1.77s/it, est. speed input: 280.39 toks/s, output: 2199.66 toks/s]Processed prompts:  38%|███▊      | 1152/3000 [21:43<1:13:06,  2.37s/it, est. speed input: 272.24 toks/s, output: 2141.06 toks/s]Processed prompts:  39%|███▉      | 1164/3000 [21:53<59:46,  1.95s/it, est. speed input: 273.03 toks/s, output: 2138.85 toks/s]  Processed prompts:  39%|███▉      | 1176/3000 [22:08<53:23,  1.76s/it, est. speed input: 271.86 toks/s, output: 2132.15 toks/s]Processed prompts:  40%|███▉      | 1188/3000 [22:52<1:09:30,  2.30s/it, est. speed input: 265.89 toks/s, output: 2093.58 toks/s]Processed prompts:  40%|████      | 1200/3000 [23:13<1:04:21,  2.15s/it, est. speed input: 265.63 toks/s, output: 2088.80 toks/s]Processed prompts:  40%|████      | 1212/3000 [23:18<48:49,  1.64s/it, est. speed input: 267.88 toks/s, output: 2101.69 toks/s]  Processed prompts:  41%|████      | 1224/3000 [23:23<37:30,  1.27s/it, est. speed input: 270.57 toks/s, output: 2113.70 toks/s]Processed prompts:  41%|████      | 1236/3000 [23:27<29:00,  1.01it/s, est. speed input: 272.93 toks/s, output: 2132.33 toks/s]Processed prompts:  42%|████▏     | 1248/3000 [23:30<22:21,  1.31it/s, est. speed input: 275.36 toks/s, output: 2144.92 toks/s]Processed prompts:  42%|████▏     | 1260/3000 [23:32<17:16,  1.68it/s, est. speed input: 277.76 toks/s, output: 2169.64 toks/s]Processed prompts:  42%|████▏     | 1272/3000 [23:33<12:57,  2.22it/s, est. speed input: 279.96 toks/s, output: 2187.10 toks/s]Processed prompts:  43%|████▎     | 1284/3000 [23:37<11:40,  2.45it/s, est. speed input: 282.66 toks/s, output: 2199.74 toks/s]Processed prompts:  43%|████▎     | 1296/3000 [23:37<08:17,  3.43it/s, est. speed input: 284.40 toks/s, output: 2221.67 toks/s]Processed prompts:  46%|████▌     | 1368/3000 [23:39<02:44,  9.94it/s, est. speed input: 302.57 toks/s, output: 2352.85 toks/s]Processed prompts:  46%|████▌     | 1380/3000 [23:48<05:16,  5.11it/s, est. speed input: 302.30 toks/s, output: 2362.65 toks/s]Processed prompts:  46%|████▌     | 1380/3000 [23:59<05:16,  5.11it/s, est. speed input: 302.30 toks/s, output: 2362.65 toks/s]Processed prompts:  46%|████▋     | 1392/3000 [25:02<32:45,  1.22s/it, est. speed input: 289.16 toks/s, output: 2253.46 toks/s]Processed prompts:  47%|████▋     | 1404/3000 [25:08<28:34,  1.07s/it, est. speed input: 291.25 toks/s, output: 2267.06 toks/s]Processed prompts:  47%|████▋     | 1416/3000 [25:17<26:36,  1.01s/it, est. speed input: 291.66 toks/s, output: 2270.55 toks/s]Processed prompts:  48%|████▊     | 1428/3000 [26:26<56:23,  2.15s/it, est. speed input: 280.29 toks/s, output: 2194.65 toks/s]Processed prompts:  48%|████▊     | 1440/3000 [26:57<58:41,  2.26s/it, est. speed input: 277.91 toks/s, output: 2176.86 toks/s]Processed prompts:  48%|████▊     | 1452/3000 [27:24<57:52,  2.24s/it, est. speed input: 275.14 toks/s, output: 2153.95 toks/s]Processed prompts:  49%|████▉     | 1464/3000 [27:27<43:55,  1.72s/it, est. speed input: 277.22 toks/s, output: 2169.08 toks/s]Processed prompts:  49%|████▉     | 1476/3000 [27:48<43:14,  1.70s/it, est. speed input: 275.36 toks/s, output: 2167.20 toks/s]Processed prompts:  50%|████▉     | 1488/3000 [27:54<34:35,  1.37s/it, est. speed input: 276.20 toks/s, output: 2176.37 toks/s]Processed prompts:  50%|█████     | 1500/3000 [27:57<26:05,  1.04s/it, est. speed input: 277.91 toks/s, output: 2191.61 toks/s]Processed prompts:  50%|█████     | 1512/3000 [28:01<20:40,  1.20it/s, est. speed input: 278.82 toks/s, output: 2206.60 toks/s]Processed prompts:  51%|█████     | 1524/3000 [28:06<17:16,  1.42it/s, est. speed input: 280.78 toks/s, output: 2215.42 toks/s]Processed prompts:  51%|█████     | 1536/3000 [28:09<13:54,  1.75it/s, est. speed input: 283.50 toks/s, output: 2227.10 toks/s]Processed prompts:  52%|█████▏    | 1548/3000 [28:10<10:31,  2.30it/s, est. speed input: 285.14 toks/s, output: 2235.43 toks/s]Processed prompts:  52%|█████▏    | 1560/3000 [28:12<08:22,  2.87it/s, est. speed input: 287.65 toks/s, output: 2245.45 toks/s]Processed prompts:  52%|█████▏    | 1572/3000 [28:12<06:05,  3.91it/s, est. speed input: 289.77 toks/s, output: 2268.32 toks/s]Processed prompts:  53%|█████▎    | 1584/3000 [28:13<04:24,  5.36it/s, est. speed input: 292.01 toks/s, output: 2288.65 toks/s]Processed prompts:  53%|█████▎    | 1596/3000 [28:14<03:36,  6.47it/s, est. speed input: 294.00 toks/s, output: 2308.68 toks/s]Processed prompts:  54%|█████▎    | 1608/3000 [28:14<02:53,  8.02it/s, est. speed input: 295.79 toks/s, output: 2325.24 toks/s]Processed prompts:  54%|█████▍    | 1620/3000 [28:21<06:05,  3.78it/s, est. speed input: 295.95 toks/s, output: 2336.11 toks/s]Processed prompts:  54%|█████▍    | 1632/3000 [28:26<06:44,  3.38it/s, est. speed input: 296.97 toks/s, output: 2343.43 toks/s]Processed prompts:  54%|█████▍    | 1632/3000 [28:39<06:44,  3.38it/s, est. speed input: 296.97 toks/s, output: 2343.43 toks/s]Processed prompts:  55%|█████▍    | 1644/3000 [28:39<12:14,  1.85it/s, est. speed input: 296.35 toks/s, output: 2334.18 toks/s]Processed prompts:  55%|█████▌    | 1656/3000 [28:53<16:02,  1.40it/s, est. speed input: 295.85 toks/s, output: 2331.67 toks/s]Processed prompts:  56%|█████▌    | 1668/3000 [29:25<28:59,  1.31s/it, est. speed input: 292.61 toks/s, output: 2303.51 toks/s]Processed prompts:  56%|█████▌    | 1680/3000 [29:47<32:00,  1.45s/it, est. speed input: 290.74 toks/s, output: 2287.58 toks/s]Processed prompts:  56%|█████▋    | 1692/3000 [30:20<40:09,  1.84s/it, est. speed input: 287.69 toks/s, output: 2267.99 toks/s]Processed prompts:  57%|█████▋    | 1704/3000 [30:58<48:28,  2.24s/it, est. speed input: 283.43 toks/s, output: 2239.22 toks/s]Processed prompts:  57%|█████▋    | 1716/3000 [30:59<34:11,  1.60s/it, est. speed input: 285.05 toks/s, output: 2252.86 toks/s]Processed prompts:  57%|█████▋    | 1716/3000 [31:09<34:11,  1.60s/it, est. speed input: 285.05 toks/s, output: 2252.86 toks/s]Processed prompts:  58%|█████▊    | 1728/3000 [31:23<36:22,  1.72s/it, est. speed input: 282.93 toks/s, output: 2238.01 toks/s]Processed prompts:  58%|█████▊    | 1740/3000 [31:28<27:50,  1.33s/it, est. speed input: 284.05 toks/s, output: 2250.64 toks/s]Processed prompts:  58%|█████▊    | 1752/3000 [31:47<29:18,  1.41s/it, est. speed input: 285.29 toks/s, output: 2243.56 toks/s]Processed prompts:  59%|█████▉    | 1764/3000 [32:21<37:39,  1.83s/it, est. speed input: 282.37 toks/s, output: 2223.10 toks/s]Processed prompts:  59%|█████▉    | 1776/3000 [32:29<30:20,  1.49s/it, est. speed input: 283.83 toks/s, output: 2230.78 toks/s]Processed prompts:  60%|█████▉    | 1788/3000 [32:33<23:03,  1.14s/it, est. speed input: 285.16 toks/s, output: 2242.56 toks/s]Processed prompts:  60%|██████    | 1800/3000 [32:35<17:05,  1.17it/s, est. speed input: 286.44 toks/s, output: 2251.10 toks/s]Processed prompts:  60%|██████    | 1812/3000 [32:40<14:07,  1.40it/s, est. speed input: 288.49 toks/s, output: 2265.02 toks/s]Processed prompts:  61%|██████    | 1824/3000 [32:41<10:32,  1.86it/s, est. speed input: 290.81 toks/s, output: 2278.18 toks/s]Processed prompts:  61%|██████    | 1836/3000 [32:42<07:35,  2.55it/s, est. speed input: 292.24 toks/s, output: 2296.63 toks/s]Processed prompts:  62%|██████▏   | 1848/3000 [32:42<05:22,  3.58it/s, est. speed input: 295.00 toks/s, output: 2315.87 toks/s]Processed prompts:  63%|██████▎   | 1884/3000 [32:42<02:19,  8.02it/s, est. speed input: 301.30 toks/s, output: 2367.68 toks/s]Processed prompts:  63%|██████▎   | 1896/3000 [32:44<02:22,  7.75it/s, est. speed input: 303.80 toks/s, output: 2382.19 toks/s]Processed prompts:  63%|██████▎   | 1896/3000 [32:59<02:22,  7.75it/s, est. speed input: 303.80 toks/s, output: 2382.19 toks/s]Processed prompts:  64%|██████▎   | 1908/3000 [33:37<20:22,  1.12s/it, est. speed input: 297.58 toks/s, output: 2330.27 toks/s]Processed prompts:  64%|██████▍   | 1920/3000 [33:55<21:49,  1.21s/it, est. speed input: 296.64 toks/s, output: 2324.87 toks/s]Processed prompts:  64%|██████▍   | 1932/3000 [34:10<21:44,  1.22s/it, est. speed input: 296.03 toks/s, output: 2319.62 toks/s]Processed prompts:  65%|██████▍   | 1944/3000 [34:43<28:55,  1.64s/it, est. speed input: 292.32 toks/s, output: 2291.75 toks/s]Processed prompts:  65%|██████▌   | 1956/3000 [34:57<26:16,  1.51s/it, est. speed input: 292.34 toks/s, output: 2290.41 toks/s]Processed prompts:  66%|██████▌   | 1968/3000 [35:18<27:16,  1.59s/it, est. speed input: 290.75 toks/s, output: 2281.46 toks/s]Processed prompts:  66%|██████▌   | 1980/3000 [35:40<28:01,  1.65s/it, est. speed input: 289.56 toks/s, output: 2271.50 toks/s]Processed prompts:  66%|██████▋   | 1992/3000 [35:43<20:52,  1.24s/it, est. speed input: 290.96 toks/s, output: 2285.02 toks/s]Processed prompts:  66%|██████▋   | 1992/3000 [35:59<20:52,  1.24s/it, est. speed input: 290.96 toks/s, output: 2285.02 toks/s]Processed prompts:  67%|██████▋   | 2004/3000 [36:07<24:15,  1.46s/it, est. speed input: 290.20 toks/s, output: 2278.30 toks/s]Processed prompts:  67%|██████▋   | 2016/3000 [36:26<24:31,  1.50s/it, est. speed input: 289.39 toks/s, output: 2274.81 toks/s]Processed prompts:  68%|██████▊   | 2028/3000 [36:45<24:42,  1.53s/it, est. speed input: 287.89 toks/s, output: 2263.42 toks/s]Processed prompts:  68%|██████▊   | 2040/3000 [36:59<22:49,  1.43s/it, est. speed input: 287.60 toks/s, output: 2261.08 toks/s]Processed prompts:  68%|██████▊   | 2052/3000 [37:04<17:53,  1.13s/it, est. speed input: 288.02 toks/s, output: 2266.02 toks/s]Processed prompts:  69%|██████▉   | 2064/3000 [37:14<16:06,  1.03s/it, est. speed input: 288.37 toks/s, output: 2267.77 toks/s]Processed prompts:  69%|██████▉   | 2076/3000 [37:16<12:01,  1.28it/s, est. speed input: 289.81 toks/s, output: 2280.80 toks/s]Processed prompts:  70%|██████▉   | 2088/3000 [37:18<08:52,  1.71it/s, est. speed input: 291.29 toks/s, output: 2295.81 toks/s]Processed prompts:  70%|███████   | 2100/3000 [37:19<06:40,  2.25it/s, est. speed input: 292.91 toks/s, output: 2304.75 toks/s]Processed prompts:  70%|███████   | 2112/3000 [37:27<07:22,  2.01it/s, est. speed input: 294.30 toks/s, output: 2307.52 toks/s]Processed prompts:  71%|███████   | 2124/3000 [37:28<05:37,  2.59it/s, est. speed input: 295.50 toks/s, output: 2318.22 toks/s]Processed prompts:  72%|███████▏  | 2172/3000 [37:31<02:24,  5.74it/s, est. speed input: 301.02 toks/s, output: 2374.89 toks/s]Processed prompts:  73%|███████▎  | 2184/3000 [37:40<03:56,  3.45it/s, est. speed input: 301.84 toks/s, output: 2380.75 toks/s]Processed prompts:  73%|███████▎  | 2196/3000 [38:23<12:53,  1.04it/s, est. speed input: 297.48 toks/s, output: 2348.72 toks/s]Processed prompts:  74%|███████▎  | 2208/3000 [39:06<20:42,  1.57s/it, est. speed input: 294.44 toks/s, output: 2320.86 toks/s]Processed prompts:  74%|███████▍  | 2220/3000 [39:25<20:29,  1.58s/it, est. speed input: 293.22 toks/s, output: 2313.33 toks/s]Processed prompts:  74%|███████▍  | 2232/3000 [39:47<21:00,  1.64s/it, est. speed input: 291.72 toks/s, output: 2303.28 toks/s]Processed prompts:  75%|███████▍  | 2244/3000 [40:09<21:16,  1.69s/it, est. speed input: 291.83 toks/s, output: 2301.19 toks/s]Processed prompts:  75%|███████▌  | 2256/3000 [40:13<16:17,  1.31s/it, est. speed input: 292.45 toks/s, output: 2308.78 toks/s]Processed prompts:  76%|███████▌  | 2268/3000 [40:19<13:07,  1.08s/it, est. speed input: 293.43 toks/s, output: 2317.82 toks/s]Processed prompts:  76%|███████▌  | 2280/3000 [40:23<10:27,  1.15it/s, est. speed input: 294.40 toks/s, output: 2331.78 toks/s]Processed prompts:  76%|███████▋  | 2292/3000 [40:41<12:28,  1.06s/it, est. speed input: 293.15 toks/s, output: 2324.89 toks/s]Processed prompts:  77%|███████▋  | 2304/3000 [41:06<15:45,  1.36s/it, est. speed input: 291.26 toks/s, output: 2311.78 toks/s]Processed prompts:  77%|███████▋  | 2316/3000 [41:16<13:41,  1.20s/it, est. speed input: 291.27 toks/s, output: 2312.77 toks/s]Processed prompts:  78%|███████▊  | 2328/3000 [41:36<15:03,  1.34s/it, est. speed input: 291.56 toks/s, output: 2304.43 toks/s]Processed prompts:  78%|███████▊  | 2340/3000 [41:45<12:48,  1.16s/it, est. speed input: 291.73 toks/s, output: 2310.79 toks/s]Processed prompts:  78%|███████▊  | 2352/3000 [41:49<09:54,  1.09it/s, est. speed input: 292.27 toks/s, output: 2318.10 toks/s]Processed prompts:  79%|███████▉  | 2364/3000 [41:54<07:56,  1.33it/s, est. speed input: 292.96 toks/s, output: 2324.41 toks/s]Processed prompts:  79%|███████▉  | 2376/3000 [41:58<06:37,  1.57it/s, est. speed input: 293.61 toks/s, output: 2329.88 toks/s]Processed prompts:  80%|███████▉  | 2388/3000 [42:10<07:38,  1.34it/s, est. speed input: 293.95 toks/s, output: 2334.90 toks/s]Processed prompts:  80%|████████  | 2400/3000 [42:12<05:41,  1.75it/s, est. speed input: 295.73 toks/s, output: 2347.14 toks/s]Processed prompts:  80%|████████  | 2412/3000 [42:13<04:04,  2.41it/s, est. speed input: 296.82 toks/s, output: 2357.46 toks/s]Processed prompts:  81%|████████  | 2424/3000 [42:13<02:51,  3.35it/s, est. speed input: 298.13 toks/s, output: 2368.48 toks/s]Processed prompts:  81%|████████  | 2424/3000 [42:29<02:51,  3.35it/s, est. speed input: 298.13 toks/s, output: 2368.48 toks/s]Processed prompts:  81%|████████  | 2436/3000 [42:31<06:14,  1.51it/s, est. speed input: 297.23 toks/s, output: 2363.20 toks/s]Processed prompts:  82%|████████▏ | 2448/3000 [42:51<08:52,  1.04it/s, est. speed input: 296.94 toks/s, output: 2354.57 toks/s]Processed prompts:  82%|████████▏ | 2460/3000 [43:20<12:36,  1.40s/it, est. speed input: 295.18 toks/s, output: 2337.09 toks/s]Processed prompts:  82%|████████▏ | 2472/3000 [44:05<18:28,  2.10s/it, est. speed input: 291.93 toks/s, output: 2306.67 toks/s]Processed prompts:  83%|████████▎ | 2484/3000 [44:24<16:39,  1.94s/it, est. speed input: 291.48 toks/s, output: 2304.25 toks/s]Processed prompts:  83%|████████▎ | 2496/3000 [44:35<13:46,  1.64s/it, est. speed input: 291.58 toks/s, output: 2305.02 toks/s]Processed prompts:  84%|████████▎ | 2508/3000 [44:50<12:27,  1.52s/it, est. speed input: 291.25 toks/s, output: 2305.06 toks/s]Processed prompts:  84%|████████▍ | 2520/3000 [44:50<08:34,  1.07s/it, est. speed input: 292.30 toks/s, output: 2318.02 toks/s]Processed prompts:  86%|████████▌ | 2568/3000 [44:50<02:52,  2.51it/s, est. speed input: 297.96 toks/s, output: 2360.86 toks/s]Processed prompts:  86%|████████▋ | 2592/3000 [45:00<02:45,  2.47it/s, est. speed input: 299.38 toks/s, output: 2376.74 toks/s]Processed prompts:  87%|████████▋ | 2604/3000 [45:35<05:35,  1.18it/s, est. speed input: 296.79 toks/s, output: 2359.25 toks/s]Processed prompts:  87%|████████▋ | 2616/3000 [45:43<05:14,  1.22it/s, est. speed input: 296.96 toks/s, output: 2362.46 toks/s]Processed prompts:  88%|████████▊ | 2628/3000 [45:53<05:02,  1.23it/s, est. speed input: 296.97 toks/s, output: 2362.62 toks/s]Processed prompts:  88%|████████▊ | 2640/3000 [46:03<05:00,  1.20it/s, est. speed input: 297.05 toks/s, output: 2361.83 toks/s]Processed prompts:  88%|████████▊ | 2652/3000 [46:18<05:27,  1.06it/s, est. speed input: 296.78 toks/s, output: 2363.04 toks/s]Processed prompts:  89%|████████▉ | 2664/3000 [46:36<06:04,  1.09s/it, est. speed input: 296.22 toks/s, output: 2357.33 toks/s]Processed prompts:  89%|████████▉ | 2676/3000 [46:47<05:33,  1.03s/it, est. speed input: 296.02 toks/s, output: 2360.44 toks/s]Processed prompts:  90%|████████▉ | 2688/3000 [46:47<03:52,  1.34it/s, est. speed input: 297.09 toks/s, output: 2369.26 toks/s]Processed prompts:  90%|█████████ | 2700/3000 [46:49<02:50,  1.76it/s, est. speed input: 298.27 toks/s, output: 2381.32 toks/s]Processed prompts:  90%|█████████ | 2700/3000 [46:59<02:50,  1.76it/s, est. speed input: 298.27 toks/s, output: 2381.32 toks/s]Processed prompts:  90%|█████████ | 2712/3000 [47:43<08:17,  1.73s/it, est. speed input: 293.89 toks/s, output: 2347.49 toks/s]Processed prompts:  91%|█████████ | 2724/3000 [48:14<09:05,  1.98s/it, est. speed input: 292.11 toks/s, output: 2330.94 toks/s]Processed prompts:  91%|█████████ | 2736/3000 [48:31<08:01,  1.82s/it, est. speed input: 291.90 toks/s, output: 2324.19 toks/s]Processed prompts:  92%|█████████▏| 2748/3000 [48:56<07:59,  1.90s/it, est. speed input: 290.70 toks/s, output: 2316.76 toks/s]Processed prompts:  92%|█████████▏| 2760/3000 [49:08<06:31,  1.63s/it, est. speed input: 291.06 toks/s, output: 2319.72 toks/s]Processed prompts:  92%|█████████▏| 2772/3000 [49:16<05:06,  1.34s/it, est. speed input: 291.31 toks/s, output: 2324.38 toks/s]Processed prompts:  93%|█████████▎| 2784/3000 [49:17<03:25,  1.05it/s, est. speed input: 292.58 toks/s, output: 2333.73 toks/s]Processed prompts:  93%|█████████▎| 2796/3000 [49:28<03:13,  1.05it/s, est. speed input: 292.82 toks/s, output: 2333.46 toks/s]Processed prompts:  94%|█████████▎| 2808/3000 [49:29<02:11,  1.46it/s, est. speed input: 293.75 toks/s, output: 2342.46 toks/s]Processed prompts:  96%|█████████▋| 2892/3000 [49:49<01:13,  1.46it/s, est. speed input: 301.87 toks/s, output: 2416.36 toks/s]Processed prompts:  97%|█████████▋| 2904/3000 [49:50<00:31,  3.07it/s, est. speed input: 300.70 toks/s, output: 2411.14 toks/s]Processed prompts:  97%|█████████▋| 2916/3000 [50:00<00:32,  2.60it/s, est. speed input: 301.29 toks/s, output: 2411.03 toks/s]Processed prompts:  98%|█████████▊| 2928/3000 [50:07<00:29,  2.43it/s, est. speed input: 301.92 toks/s, output: 2415.16 toks/s]Processed prompts:  98%|█████████▊| 2928/3000 [50:19<00:29,  2.43it/s, est. speed input: 301.92 toks/s, output: 2415.16 toks/s]Processed prompts:  98%|█████████▊| 2940/3000 [50:21<00:32,  1.84it/s, est. speed input: 301.68 toks/s, output: 2414.29 toks/s]Processed prompts:  98%|█████████▊| 2952/3000 [51:03<00:54,  1.13s/it, est. speed input: 298.97 toks/s, output: 2392.88 toks/s]Processed prompts:  99%|█████████▉| 2964/3000 [51:08<00:35,  1.02it/s, est. speed input: 299.91 toks/s, output: 2398.91 toks/s]Processed prompts:  99%|█████████▉| 2976/3000 [51:41<00:33,  1.41s/it, est. speed input: 298.07 toks/s, output: 2385.10 toks/s]Processed prompts: 100%|█████████▉| 2988/3000 [52:01<00:17,  1.48s/it, est. speed input: 297.02 toks/s, output: 2376.88 toks/s]Processed prompts: 100%|██████████| 3000/3000 [52:23<00:00,  1.57s/it, est. speed input: 296.20 toks/s, output: 2373.44 toks/s]Processed prompts: 100%|██████████| 3000/3000 [52:23<00:00,  1.57s/it, est. speed input: 296.20 toks/s, output: 2373.44 toks/s]Processed prompts: 100%|██████████| 3000/3000 [52:23<00:00,  1.05s/it, est. speed input: 296.20 toks/s, output: 2373.44 toks/s]
+
+Processing results...
+✗ [1/250] Pass@12: 0.0% | Avg@12: 0.0% | Formatted: 66.7%
+✓ [2/250] Pass@12: 50.0% | Avg@12: 4.2% | Formatted: 75.0%
+✗ [3/250] Pass@12: 33.3% | Avg@12: 2.8% | Formatted: 69.4%
+✗ [4/250] Pass@12: 25.0% | Avg@12: 2.1% | Formatted: 72.9%
+✓ [5/250] Pass@12: 40.0% | Avg@12: 5.0% | Formatted: 66.7%
+✗ [6/250] Pass@12: 33.3% | Avg@12: 4.2% | Formatted: 63.9%
+✗ [7/250] Pass@12: 28.6% | Avg@12: 3.6% | Formatted: 64.3%
+✗ [8/250] Pass@12: 25.0% | Avg@12: 3.1% | Formatted: 66.7%
+✗ [9/250] Pass@12: 22.2% | Avg@12: 2.8% | Formatted: 63.9%
+✗ [10/250] Pass@12: 20.0% | Avg@12: 2.5% | Formatted: 67.5%
+✗ [11/250] Pass@12: 18.2% | Avg@12: 2.3% | Formatted: 68.2%
+✓ [12/250] Pass@12: 25.0% | Avg@12: 4.9% | Formatted: 68.1%
+✗ [13/250] Pass@12: 23.1% | Avg@12: 4.5% | Formatted: 67.3%
+✗ [14/250] Pass@12: 21.4% | Avg@12: 4.2% | Formatted: 68.5%
+✗ [15/250] Pass@12: 20.0% | Avg@12: 3.9% | Formatted: 69.4%
+✓ [16/250] Pass@12: 25.0% | Avg@12: 4.2% | Formatted: 68.8%
+✗ [17/250] Pass@12: 23.5% | Avg@12: 3.9% | Formatted: 69.1%
+✓ [18/250] Pass@12: 27.8% | Avg@12: 4.2% | Formatted: 69.0%
+✗ [19/250] Pass@12: 26.3% | Avg@12: 3.9% | Formatted: 70.6%
+✗ [20/250] Pass@12: 25.0% | Avg@12: 3.8% | Formatted: 69.6%
+✓ [21/250] Pass@12: 28.6% | Avg@12: 4.4% | Formatted: 69.8%
+✓ [22/250] Pass@12: 31.8% | Avg@12: 4.5% | Formatted: 71.2%
+✓ [23/250] Pass@12: 34.8% | Avg@12: 4.7% | Formatted: 71.0%
+✗ [24/250] Pass@12: 33.3% | Avg@12: 4.5% | Formatted: 71.9%
+✗ [25/250] Pass@12: 32.0% | Avg@12: 4.3% | Formatted: 72.7%
+✓ [26/250] Pass@12: 34.6% | Avg@12: 5.4% | Formatted: 73.4%
+✓ [27/250] Pass@12: 37.0% | Avg@12: 7.1% | Formatted: 73.5%
+✗ [28/250] Pass@12: 35.7% | Avg@12: 6.8% | Formatted: 71.7%
+✗ [29/250] Pass@12: 34.5% | Avg@12: 6.6% | Formatted: 71.8%
+✗ [30/250] Pass@12: 33.3% | Avg@12: 6.4% | Formatted: 72.2%
+✗ [31/250] Pass@12: 32.3% | Avg@12: 6.2% | Formatted: 72.8%
+✓ [32/250] Pass@12: 34.4% | Avg@12: 6.2% | Formatted: 73.4%
+✗ [33/250] Pass@12: 33.3% | Avg@12: 6.1% | Formatted: 73.5%
+✗ [34/250] Pass@12: 32.4% | Avg@12: 5.9% | Formatted: 74.3%
+✗ [35/250] Pass@12: 31.4% | Avg@12: 5.7% | Formatted: 74.8%
+✓ [36/250] Pass@12: 33.3% | Avg@12: 6.0% | Formatted: 75.0%
+✗ [37/250] Pass@12: 32.4% | Avg@12: 5.9% | Formatted: 74.5%
+✗ [38/250] Pass@12: 31.6% | Avg@12: 5.7% | Formatted: 74.8%
+✗ [39/250] Pass@12: 30.8% | Avg@12: 5.6% | Formatted: 74.8%
+✗ [40/250] Pass@12: 30.0% | Avg@12: 5.4% | Formatted: 75.0%
+✗ [41/250] Pass@12: 29.3% | Avg@12: 5.3% | Formatted: 75.0%
+✓ [42/250] Pass@12: 31.0% | Avg@12: 5.4% | Formatted: 74.8%
+✓ [43/250] Pass@12: 32.6% | Avg@12: 5.8% | Formatted: 74.8%
+✗ [44/250] Pass@12: 31.8% | Avg@12: 5.7% | Formatted: 74.6%
+✓ [45/250] Pass@12: 33.3% | Avg@12: 5.7% | Formatted: 74.3%
+✗ [46/250] Pass@12: 32.6% | Avg@12: 5.6% | Formatted: 73.9%
+✗ [47/250] Pass@12: 31.9% | Avg@12: 5.5% | Formatted: 73.6%
+✗ [48/250] Pass@12: 31.2% | Avg@12: 5.4% | Formatted: 73.8%
+✗ [49/250] Pass@12: 30.6% | Avg@12: 5.3% | Formatted: 73.8%
+✓ [50/250] Pass@12: 32.0% | Avg@12: 6.2% | Formatted: 74.3%
+✗ [51/250] Pass@12: 31.4% | Avg@12: 6.0% | Formatted: 74.0%
+✗ [52/250] Pass@12: 30.8% | Avg@12: 5.9% | Formatted: 74.0%
+✗ [53/250] Pass@12: 30.2% | Avg@12: 5.8% | Formatted: 73.6%
+✗ [54/250] Pass@12: 29.6% | Avg@12: 5.7% | Formatted: 73.6%
+✗ [55/250] Pass@12: 29.1% | Avg@12: 5.6% | Formatted: 73.6%
+✗ [56/250] Pass@12: 28.6% | Avg@12: 5.5% | Formatted: 73.7%
+✓ [57/250] Pass@12: 29.8% | Avg@12: 5.8% | Formatted: 73.5%
+✗ [58/250] Pass@12: 29.3% | Avg@12: 5.7% | Formatted: 73.3%
+✓ [59/250] Pass@12: 30.5% | Avg@12: 6.4% | Formatted: 73.7%
+✗ [60/250] Pass@12: 30.0% | Avg@12: 6.2% | Formatted: 74.0%
+✓ [61/250] Pass@12: 31.1% | Avg@12: 6.7% | Formatted: 74.3%
+✓ [62/250] Pass@12: 32.3% | Avg@12: 7.5% | Formatted: 74.7%
+✗ [63/250] Pass@12: 31.7% | Avg@12: 7.4% | Formatted: 74.7%
+✗ [64/250] Pass@12: 31.2% | Avg@12: 7.3% | Formatted: 74.9%
+✗ [65/250] Pass@12: 30.8% | Avg@12: 7.2% | Formatted: 74.6%
+✗ [66/250] Pass@12: 30.3% | Avg@12: 7.1% | Formatted: 74.5%
+✗ [67/250] Pass@12: 29.9% | Avg@12: 7.0% | Formatted: 74.5%
+✗ [68/250] Pass@12: 29.4% | Avg@12: 6.9% | Formatted: 74.3%
+✗ [69/250] Pass@12: 29.0% | Avg@12: 6.8% | Formatted: 74.4%
+✓ [70/250] Pass@12: 30.0% | Avg@12: 7.0% | Formatted: 74.3%
+✗ [71/250] Pass@12: 29.6% | Avg@12: 6.9% | Formatted: 74.3%
+✗ [72/250] Pass@12: 29.2% | Avg@12: 6.8% | Formatted: 74.5%
+✓ [73/250] Pass@12: 30.1% | Avg@12: 7.6% | Formatted: 74.8%
+✗ [74/250] Pass@12: 29.7% | Avg@12: 7.5% | Formatted: 74.4%
+✗ [75/250] Pass@12: 29.3% | Avg@12: 7.4% | Formatted: 74.8%
+✗ [76/250] Pass@12: 28.9% | Avg@12: 7.3% | Formatted: 74.6%
+✗ [77/250] Pass@12: 28.6% | Avg@12: 7.3% | Formatted: 74.6%
+✗ [78/250] Pass@12: 28.2% | Avg@12: 7.2% | Formatted: 73.7%
+✗ [79/250] Pass@12: 27.8% | Avg@12: 7.1% | Formatted: 73.7%
+✓ [80/250] Pass@12: 28.7% | Avg@12: 7.7% | Formatted: 74.0%
+✗ [81/250] Pass@12: 28.4% | Avg@12: 7.6% | Formatted: 74.1%
+✗ [82/250] Pass@12: 28.0% | Avg@12: 7.5% | Formatted: 74.3%
+✗ [83/250] Pass@12: 27.7% | Avg@12: 7.4% | Formatted: 74.5%
+✓ [84/250] Pass@12: 28.6% | Avg@12: 7.5% | Formatted: 74.3%
+✗ [85/250] Pass@12: 28.2% | Avg@12: 7.5% | Formatted: 74.2%
+✗ [86/250] Pass@12: 27.9% | Avg@12: 7.4% | Formatted: 74.2%
+✗ [87/250] Pass@12: 27.6% | Avg@12: 7.3% | Formatted: 74.4%
+✗ [88/250] Pass@12: 27.3% | Avg@12: 7.2% | Formatted: 74.5%
+✗ [89/250] Pass@12: 27.0% | Avg@12: 7.1% | Formatted: 74.3%
+✓ [90/250] Pass@12: 27.8% | Avg@12: 7.1% | Formatted: 74.2%
+✗ [91/250] Pass@12: 27.5% | Avg@12: 7.1% | Formatted: 74.0%
+✗ [92/250] Pass@12: 27.2% | Avg@12: 7.0% | Formatted: 73.8%
+✓ [93/250] Pass@12: 28.0% | Avg@12: 7.0% | Formatted: 73.9%
+✗ [94/250] Pass@12: 27.7% | Avg@12: 6.9% | Formatted: 73.8%
+✗ [95/250] Pass@12: 27.4% | Avg@12: 6.8% | Formatted: 74.0%
+✓ [96/250] Pass@12: 28.1% | Avg@12: 6.9% | Formatted: 74.0%
+✓ [97/250] Pass@12: 28.9% | Avg@12: 7.0% | Formatted: 74.2%
+✗ [98/250] Pass@12: 28.6% | Avg@12: 6.9% | Formatted: 74.0%
+✓ [99/250] Pass@12: 29.3% | Avg@12: 7.0% | Formatted: 73.9%
+✗ [100/250] Pass@12: 29.0% | Avg@12: 6.9% | Formatted: 74.0%
+✗ [101/250] Pass@12: 28.7% | Avg@12: 6.8% | Formatted: 74.2%
+✗ [102/250] Pass@12: 28.4% | Avg@12: 6.8% | Formatted: 74.0%
+✗ [103/250] Pass@12: 28.2% | Avg@12: 6.7% | Formatted: 74.1%
+✗ [104/250] Pass@12: 27.9% | Avg@12: 6.7% | Formatted: 73.7%
+✗ [105/250] Pass@12: 27.6% | Avg@12: 6.6% | Formatted: 73.7%
+✗ [106/250] Pass@12: 27.4% | Avg@12: 6.5% | Formatted: 73.7%
+✗ [107/250] Pass@12: 27.1% | Avg@12: 6.5% | Formatted: 73.4%
+✗ [108/250] Pass@12: 26.9% | Avg@12: 6.4% | Formatted: 73.5%
+✗ [109/250] Pass@12: 26.6% | Avg@12: 6.3% | Formatted: 73.6%
+✗ [110/250] Pass@12: 26.4% | Avg@12: 6.3% | Formatted: 73.9%
+✗ [111/250] Pass@12: 26.1% | Avg@12: 6.2% | Formatted: 73.8%
+✗ [112/250] Pass@12: 25.9% | Avg@12: 6.2% | Formatted: 73.7%
+✗ [113/250] Pass@12: 25.7% | Avg@12: 6.1% | Formatted: 73.5%
+✗ [114/250] Pass@12: 25.4% | Avg@12: 6.1% | Formatted: 73.3%
+✗ [115/250] Pass@12: 25.2% | Avg@12: 6.0% | Formatted: 73.5%
+✗ [116/250] Pass@12: 25.0% | Avg@12: 6.0% | Formatted: 73.5%
+✗ [117/250] Pass@12: 24.8% | Avg@12: 5.9% | Formatted: 73.5%
+✗ [118/250] Pass@12: 24.6% | Avg@12: 5.9% | Formatted: 73.1%
+✓ [119/250] Pass@12: 25.2% | Avg@12: 5.9% | Formatted: 73.0%
+✗ [120/250] Pass@12: 25.0% | Avg@12: 5.8% | Formatted: 73.1%
+✗ [121/250] Pass@12: 24.8% | Avg@12: 5.8% | Formatted: 72.8%
+✗ [122/250] Pass@12: 24.6% | Avg@12: 5.7% | Formatted: 72.8%
+✗ [123/250] Pass@12: 24.4% | Avg@12: 5.7% | Formatted: 72.8%
+✗ [124/250] Pass@12: 24.2% | Avg@12: 5.6% | Formatted: 72.8%
+✗ [125/250] Pass@12: 24.0% | Avg@12: 5.6% | Formatted: 72.8%
+✗ [126/250] Pass@12: 23.8% | Avg@12: 5.6% | Formatted: 72.9%
+✗ [127/250] Pass@12: 23.6% | Avg@12: 5.5% | Formatted: 73.0%
+✓ [128/250] Pass@12: 24.2% | Avg@12: 5.5% | Formatted: 73.2%
+✗ [129/250] Pass@12: 24.0% | Avg@12: 5.5% | Formatted: 73.3%
+✗ [130/250] Pass@12: 23.8% | Avg@12: 5.4% | Formatted: 73.3%
+✗ [131/250] Pass@12: 23.7% | Avg@12: 5.4% | Formatted: 73.2%
+✗ [132/250] Pass@12: 23.5% | Avg@12: 5.4% | Formatted: 73.4%
+✗ [133/250] Pass@12: 23.3% | Avg@12: 5.3% | Formatted: 73.2%
+✗ [134/250] Pass@12: 23.1% | Avg@12: 5.3% | Formatted: 73.1%
+✗ [135/250] Pass@12: 23.0% | Avg@12: 5.2% | Formatted: 73.0%
+✗ [136/250] Pass@12: 22.8% | Avg@12: 5.2% | Formatted: 73.1%
+✗ [137/250] Pass@12: 22.6% | Avg@12: 5.2% | Formatted: 73.1%
+✓ [138/250] Pass@12: 23.2% | Avg@12: 5.4% | Formatted: 73.2%
+✓ [139/250] Pass@12: 23.7% | Avg@12: 5.4% | Formatted: 73.1%
+✗ [140/250] Pass@12: 23.6% | Avg@12: 5.4% | Formatted: 73.3%
+✗ [141/250] Pass@12: 23.4% | Avg@12: 5.3% | Formatted: 73.3%
+✗ [142/250] Pass@12: 23.2% | Avg@12: 5.3% | Formatted: 73.4%
+✗ [143/250] Pass@12: 23.1% | Avg@12: 5.2% | Formatted: 73.4%
+✗ [144/250] Pass@12: 22.9% | Avg@12: 5.2% | Formatted: 73.3%
+✗ [145/250] Pass@12: 22.8% | Avg@12: 5.2% | Formatted: 73.2%
+✗ [146/250] Pass@12: 22.6% | Avg@12: 5.1% | Formatted: 73.3%
+✗ [147/250] Pass@12: 22.4% | Avg@12: 5.1% | Formatted: 73.2%
+✗ [148/250] Pass@12: 22.3% | Avg@12: 5.1% | Formatted: 73.1%
+✓ [149/250] Pass@12: 22.8% | Avg@12: 5.1% | Formatted: 73.2%
+✓ [150/250] Pass@12: 23.3% | Avg@12: 5.3% | Formatted: 73.3%
+✗ [151/250] Pass@12: 23.2% | Avg@12: 5.2% | Formatted: 73.2%
+✗ [152/250] Pass@12: 23.0% | Avg@12: 5.2% | Formatted: 73.0%
+✗ [153/250] Pass@12: 22.9% | Avg@12: 5.2% | Formatted: 72.9%
+✗ [154/250] Pass@12: 22.7% | Avg@12: 5.1% | Formatted: 72.8%
+✗ [155/250] Pass@12: 22.6% | Avg@12: 5.1% | Formatted: 72.8%
+✗ [156/250] Pass@12: 22.4% | Avg@12: 5.1% | Formatted: 72.8%
+✓ [157/250] Pass@12: 22.9% | Avg@12: 5.1% | Formatted: 72.7%
+✗ [158/250] Pass@12: 22.8% | Avg@12: 5.1% | Formatted: 72.7%
+✓ [159/250] Pass@12: 23.3% | Avg@12: 5.3% | Formatted: 72.7%
+✗ [160/250] Pass@12: 23.1% | Avg@12: 5.3% | Formatted: 72.7%
+✗ [161/250] Pass@12: 23.0% | Avg@12: 5.3% | Formatted: 72.7%
+✗ [162/250] Pass@12: 22.8% | Avg@12: 5.2% | Formatted: 72.7%
+✗ [163/250] Pass@12: 22.7% | Avg@12: 5.2% | Formatted: 72.8%
+✗ [164/250] Pass@12: 22.6% | Avg@12: 5.2% | Formatted: 72.8%
+✗ [165/250] Pass@12: 22.4% | Avg@12: 5.2% | Formatted: 72.7%
+✗ [166/250] Pass@12: 22.3% | Avg@12: 5.1% | Formatted: 72.4%
+✗ [167/250] Pass@12: 22.2% | Avg@12: 5.1% | Formatted: 72.3%
+✗ [168/250] Pass@12: 22.0% | Avg@12: 5.1% | Formatted: 72.4%
+✗ [169/250] Pass@12: 21.9% | Avg@12: 5.0% | Formatted: 72.5%
+✗ [170/250] Pass@12: 21.8% | Avg@12: 5.0% | Formatted: 72.5%
+✗ [171/250] Pass@12: 21.6% | Avg@12: 5.0% | Formatted: 72.4%
+✗ [172/250] Pass@12: 21.5% | Avg@12: 4.9% | Formatted: 72.3%
+✗ [173/250] Pass@12: 21.4% | Avg@12: 4.9% | Formatted: 72.2%
+✗ [174/250] Pass@12: 21.3% | Avg@12: 4.9% | Formatted: 72.4%
+✗ [175/250] Pass@12: 21.1% | Avg@12: 4.9% | Formatted: 72.5%
+✓ [176/250] Pass@12: 21.6% | Avg@12: 4.9% | Formatted: 72.6%
+✓ [177/250] Pass@12: 22.0% | Avg@12: 4.9% | Formatted: 72.6%
+✗ [178/250] Pass@12: 21.9% | Avg@12: 4.9% | Formatted: 72.5%
+✗ [179/250] Pass@12: 21.8% | Avg@12: 4.8% | Formatted: 72.5%
+✗ [180/250] Pass@12: 21.7% | Avg@12: 4.8% | Formatted: 72.5%
+✓ [181/250] Pass@12: 22.1% | Avg@12: 4.9% | Formatted: 72.5%
+✗ [182/250] Pass@12: 22.0% | Avg@12: 4.9% | Formatted: 72.4%
+✗ [183/250] Pass@12: 21.9% | Avg@12: 4.9% | Formatted: 72.4%
+✗ [184/250] Pass@12: 21.7% | Avg@12: 4.8% | Formatted: 72.3%
+✗ [185/250] Pass@12: 21.6% | Avg@12: 4.8% | Formatted: 72.2%
+✗ [186/250] Pass@12: 21.5% | Avg@12: 4.8% | Formatted: 72.3%
+✗ [187/250] Pass@12: 21.4% | Avg@12: 4.8% | Formatted: 72.0%
+✗ [188/250] Pass@12: 21.3% | Avg@12: 4.7% | Formatted: 72.0%
+✗ [189/250] Pass@12: 21.2% | Avg@12: 4.7% | Formatted: 72.0%
+✗ [190/250] Pass@12: 21.1% | Avg@12: 4.7% | Formatted: 71.8%
+✗ [191/250] Pass@12: 20.9% | Avg@12: 4.7% | Formatted: 71.8%
+✗ [192/250] Pass@12: 20.8% | Avg@12: 4.6% | Formatted: 71.8%
+✗ [193/250] Pass@12: 20.7% | Avg@12: 4.6% | Formatted: 71.9%
+✗ [194/250] Pass@12: 20.6% | Avg@12: 4.6% | Formatted: 72.0%
+✗ [195/250] Pass@12: 20.5% | Avg@12: 4.6% | Formatted: 71.9%
+✓ [196/250] Pass@12: 20.9% | Avg@12: 4.6% | Formatted: 71.9%
+✓ [197/250] Pass@12: 21.3% | Avg@12: 4.6% | Formatted: 71.9%
+✓ [198/250] Pass@12: 21.7% | Avg@12: 4.6% | Formatted: 72.0%
+✗ [199/250] Pass@12: 21.6% | Avg@12: 4.6% | Formatted: 71.9%
+✗ [200/250] Pass@12: 21.5% | Avg@12: 4.6% | Formatted: 71.8%
+✗ [201/250] Pass@12: 21.4% | Avg@12: 4.6% | Formatted: 71.9%
+✗ [202/250] Pass@12: 21.3% | Avg@12: 4.5% | Formatted: 71.9%
+✓ [203/250] Pass@12: 21.7% | Avg@12: 4.6% | Formatted: 72.0%
+✗ [204/250] Pass@12: 21.6% | Avg@12: 4.6% | Formatted: 72.0%
+✓ [205/250] Pass@12: 22.0% | Avg@12: 4.6% | Formatted: 72.1%
+✗ [206/250] Pass@12: 21.8% | Avg@12: 4.6% | Formatted: 72.1%
+✗ [207/250] Pass@12: 21.7% | Avg@12: 4.5% | Formatted: 72.1%
+✗ [208/250] Pass@12: 21.6% | Avg@12: 4.5% | Formatted: 72.1%
+✗ [209/250] Pass@12: 21.5% | Avg@12: 4.5% | Formatted: 72.0%
+✗ [210/250] Pass@12: 21.4% | Avg@12: 4.5% | Formatted: 71.9%
+✓ [211/250] Pass@12: 21.8% | Avg@12: 4.5% | Formatted: 71.8%
+✗ [212/250] Pass@12: 21.7% | Avg@12: 4.5% | Formatted: 71.9%
+✗ [213/250] Pass@12: 21.6% | Avg@12: 4.5% | Formatted: 71.8%
+✓ [214/250] Pass@12: 22.0% | Avg@12: 4.5% | Formatted: 71.9%
+✗ [215/250] Pass@12: 21.9% | Avg@12: 4.5% | Formatted: 71.8%
+✗ [216/250] Pass@12: 21.8% | Avg@12: 4.4% | Formatted: 71.9%
+✗ [217/250] Pass@12: 21.7% | Avg@12: 4.4% | Formatted: 71.9%
+✗ [218/250] Pass@12: 21.6% | Avg@12: 4.4% | Formatted: 71.9%
+✗ [219/250] Pass@12: 21.5% | Avg@12: 4.4% | Formatted: 71.9%
+✗ [220/250] Pass@12: 21.4% | Avg@12: 4.4% | Formatted: 72.0%
+✗ [221/250] Pass@12: 21.3% | Avg@12: 4.3% | Formatted: 71.8%
+✗ [222/250] Pass@12: 21.2% | Avg@12: 4.3% | Formatted: 71.8%
+✗ [223/250] Pass@12: 21.1% | Avg@12: 4.3% | Formatted: 71.8%
+✗ [224/250] Pass@12: 21.0% | Avg@12: 4.3% | Formatted: 71.8%
+✓ [225/250] Pass@12: 21.3% | Avg@12: 4.3% | Formatted: 71.8%
+✗ [226/250] Pass@12: 21.2% | Avg@12: 4.3% | Formatted: 71.8%
+✗ [227/250] Pass@12: 21.1% | Avg@12: 4.3% | Formatted: 71.9%
+✓ [228/250] Pass@12: 21.5% | Avg@12: 4.4% | Formatted: 71.9%
+✗ [229/250] Pass@12: 21.4% | Avg@12: 4.4% | Formatted: 71.8%
+✗ [230/250] Pass@12: 21.3% | Avg@12: 4.4% | Formatted: 71.8%
+✓ [231/250] Pass@12: 21.6% | Avg@12: 4.5% | Formatted: 71.8%
+✗ [232/250] Pass@12: 21.6% | Avg@12: 4.5% | Formatted: 71.8%
+✗ [233/250] Pass@12: 21.5% | Avg@12: 4.4% | Formatted: 71.8%
+✗ [234/250] Pass@12: 21.4% | Avg@12: 4.4% | Formatted: 71.7%
+✗ [235/250] Pass@12: 21.3% | Avg@12: 4.4% | Formatted: 71.7%
+✓ [236/250] Pass@12: 21.6% | Avg@12: 4.4% | Formatted: 71.6%
+✗ [237/250] Pass@12: 21.5% | Avg@12: 4.4% | Formatted: 71.6%
+✗ [238/250] Pass@12: 21.4% | Avg@12: 4.4% | Formatted: 71.7%
+✗ [239/250] Pass@12: 21.3% | Avg@12: 4.4% | Formatted: 71.7%
+✗ [240/250] Pass@12: 21.2% | Avg@12: 4.3% | Formatted: 71.7%
+✗ [241/250] Pass@12: 21.2% | Avg@12: 4.3% | Formatted: 71.8%
+✗ [242/250] Pass@12: 21.1% | Avg@12: 4.3% | Formatted: 71.7%
+✗ [243/250] Pass@12: 21.0% | Avg@12: 4.3% | Formatted: 71.7%
+✗ [244/250] Pass@12: 20.9% | Avg@12: 4.3% | Formatted: 71.6%
+✗ [245/250] Pass@12: 20.8% | Avg@12: 4.3% | Formatted: 71.7%
+✗ [246/250] Pass@12: 20.7% | Avg@12: 4.2% | Formatted: 71.7%
+✗ [247/250] Pass@12: 20.6% | Avg@12: 4.2% | Formatted: 71.6%
+✗ [248/250] Pass@12: 20.6% | Avg@12: 4.2% | Formatted: 71.5%
+✓ [249/250] Pass@12: 20.9% | Avg@12: 4.3% | Formatted: 71.6%
+✗ [250/250] Pass@12: 20.8% | Avg@12: 4.3% | Formatted: 71.5%
+
+======================================================================
+FINAL RESULTS
+======================================================================
+Dataset: afrimgsm
+dataset_name: masakhane/afrimgsm
+dataset_config: amh
+language: AMH
+afrimgsm_split: test
+Thinking Mode: ENABLED
+Total problems: 250
+Solutions per problem: 12
+Total solutions: 3000
+
+Metrics:
+  Pass@12: 20.80% (52/250)
+  Average@12: 4.30% (129/3000)
+  Majority Vote@12: 7.60% (19/250)
+
+Formatting:
+  Formatted (boxed) answers: 2144/3000
+  Format rate: 71.47%
+======================================================================
+
+Detailed results saved to: eval_results/afrimgsm/amh/test/qwen3_1.7b_opsd_amh_step15_max4096_valn12.json
+
+======================================================================
+EVALUATION COMPLETE!
+======================================================================
+Final Average@12: 4.30%
+Results saved to: eval_results/afrimgsm/amh/test/qwen3_1.7b_opsd_amh_step15_max4096_valn12.json
+======================================================================
+
