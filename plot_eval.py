@@ -109,28 +109,31 @@ def plot_compare(ms, out_png):
     # otherwise fall back to grouped bars ordered as passed.
     have_steps = all(m["step"] is not None for m in ms)
     fig, ax = plt.subplots(figsize=(8, 4.8))
+    # (label, key, color, linestyle). format rate is dashed -- it's a different
+    # kind of metric (extractability), not an accuracy, but shares the % axis.
     series = [
-        (f"pass@{ms[0]['val_n']}", "pass_at_n", BLUE),
-        (f"majority@{ms[0]['val_n']}", "majority", ORANGE),
-        (f"average@{ms[0]['val_n']}", "average", GREEN),
+        (f"pass@{ms[0]['val_n']}", "pass_at_n", BLUE, "-"),
+        (f"majority@{ms[0]['val_n']}", "majority", ORANGE, "-"),
+        (f"average@{ms[0]['val_n']}", "average", GREEN, "-"),
+        ("format rate", "format_rate", GRAY, "--"),
     ]
 
     if have_steps:
         ms = sorted(ms, key=lambda m: m["step"])
         xs = [m["step"] for m in ms]
-        for name, key, color in series:
+        for name, key, color, ls in series:
             ys = [m[key] for m in ms]
-            ax.plot(xs, ys, "-o", color=color, linewidth=2, markersize=6, label=name)
+            ax.plot(xs, ys, ls, marker="o", color=color, linewidth=2, markersize=6, label=name)
         # direct-label the final point of each line
-        for name, key, color in series:
+        for name, key, color, ls in series:
             ax.text(xs[-1] + 0.4, ms[-1][key], f"{ms[-1][key]:.1f}", color=INK, fontsize=9, va="center")
         ax.set_xlabel("training step")
         ax.set_xticks(xs)
     else:
         x = range(len(ms))
-        w = 0.26
-        for i, (name, key, color) in enumerate(series):
-            offs = [xi + (i - 1) * w for xi in x]
+        w = 0.2
+        for i, (name, key, color, ls) in enumerate(series):
+            offs = [xi + (i - 1.5) * w for xi in x]
             ax.bar(offs, [m[key] for m in ms], width=w, color=color, label=name)
         ax.set_xticks(list(x))
         ax.set_xticklabels([m["label"] for m in ms], rotation=20, ha="right", fontsize=9)
