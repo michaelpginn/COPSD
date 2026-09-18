@@ -135,7 +135,7 @@ class MultilingualSelfDistillationDataCollator:
 
         if self.include_reference_solution_en:
             answer_only = re.match(
-                r".*\\\[\s+\\boxed{(.*)}\s+\\\].*", solution_en
+                r".*\\\[\s+\\boxed{(.*)}\s+\\\].*", solution_en, flags=re.DOTALL
             ).group(1)
             # don't include boxed so there's no format clue
             parts.append(
