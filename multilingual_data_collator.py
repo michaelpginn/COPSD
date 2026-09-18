@@ -134,7 +134,9 @@ class MultilingualSelfDistillationDataCollator:
             parts.append(f"{labels['problem_english']}: {problem_en}")
 
         if self.include_reference_solution_en:
-            answer_only = re.match(r"\\\[\s+\\boxed{(.*)}\s+\\\]", solution_en).group(1)
+            answer_only = re.match(
+                r".*\\\[\s+\\boxed{(.*)}\s+\\\].*", solution_en
+            ).group(1)
             # don't include boxed so there's no format clue
             parts.append(
                 f"{labels['solution_english']}:\n{answer_only}"
