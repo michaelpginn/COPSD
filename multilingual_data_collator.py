@@ -1,3 +1,5 @@
+import re
+
 import torch
 
 from language_config import LANGUAGE_CONFIG
@@ -37,7 +39,7 @@ class MultilingualSelfDistillationDataCollator:
         include_problem_en=True,
         include_reference_solution_en=True,
     ):
-        
+
         self.tokenizer = tokenizer
         self.max_length = max_length
         self.reason_first = reason_first
@@ -50,14 +52,18 @@ class MultilingualSelfDistillationDataCollator:
         print(f"[DataCollator] Set padding_side to: {self.tokenizer.padding_side}")
         print(f"[DataCollator] Reason first mode: {self.reason_first}")
         print(f"[DataCollator] Include English problem: {self.include_problem_en}")
-        print(f"[DataCollator] Include English reference solution: {self.include_reference_solution_en}")
+        print(
+            f"[DataCollator] Include English reference solution: {self.include_reference_solution_en}"
+        )
 
     def _normalize_lang(self, lang_code):
         if lang_code is None:
             return "EN"
         lang = str(lang_code).strip().upper()
         if lang not in LANGUAGE_CONFIG:
-            print(f"[DataCollator] Warning: unsupported lang_code={lang}; falling back to EN.")
+            print(
+                f"[DataCollator] Warning: unsupported lang_code={lang}; falling back to EN."
+            )
             return "EN"
         return lang
 
@@ -72,11 +78,13 @@ class MultilingualSelfDistillationDataCollator:
             return feature.get("problem_en", feature["problem"])
 
         lang_key = f"problem_{lang_code.lower()}"
-        if lang_key in feature and feature[lang_key]:
+        if feature.get(lang_key):
             return feature[lang_key]
 
-        if "problem_en" in feature and feature["problem_en"]:
-            print(f"[DataCollator] Warning: missing {lang_key}; falling back to problem_en.")
+        if feature.get("problem_en"):
+            print(
+                f"[DataCollator] Warning: missing {lang_key}; falling back to problem_en."
+            )
             return feature["problem_en"]
 
         print(f"[DataCollator] Warning: missing {lang_key}; falling back to problem.")
@@ -84,7 +92,7 @@ class MultilingualSelfDistillationDataCollator:
 
     def _append_qwen3_assistant_prefix(self, base_prompt):
         return base_prompt + "<|im_start|>assistant\n<think>\n\n</think>\n\n"
-    
+
     def _append_qwen3_think_prefix(self, base_prompt, lang_code):
         """
         For Qwen3, manually append assistant generation prefix and think-hack.
@@ -110,7 +118,7 @@ class MultilingualSelfDistillationDataCollator:
             return_tensors="pt",
         )
         return encoded, lengths, max_len
-    
+
     def _build_teacher_privileged_context(
         self,
         labels,
@@ -123,26 +131,26 @@ class MultilingualSelfDistillationDataCollator:
         ]
 
         if self.include_problem_en:
-            parts.append(
-                f"{labels['problem_english']}: {problem_en}"
-            )
+            parts.append(f"{labels['problem_english']}: {problem_en}")
 
         if self.include_reference_solution_en:
+            answer_only = re.match(r"\\\[\s+\\boxed{(.*)}\s+\\\]", solution_en).group(1)
+            # don't include boxed so there's no format clue
             parts.append(
-                f"{labels['solution_english']}:\n"
-                f"{labels['ref_begin']}\n"
-                f"{solution_en}\n"
-                f"{labels['ref_end']}"
+                f"{labels['solution_english']}:\n{answer_only}"
+                # f"{labels['ref_begin']}\n"
+                # f"{solution_en}\n"
+                # f"{labels['ref_end']}"
             )
 
         return "\n\n".join(parts)
-    
+
     def _get_teacher_instruction(self, lang_cfg):
-        if self.include_reference_solution_en:
-            return (
-                f"{lang_cfg['transition_prompt']}\n"
-                f"{lang_cfg['teacher_final_instruction']}"
-            )
+        # if self.include_reference_solution_en:
+        #     return (
+        #         f"{lang_cfg['transition_prompt']}\n"
+        #         f"{lang_cfg['teacher_final_instruction']}"
+        #     )
 
         return lang_cfg["teacher_final_instruction"]
 
@@ -163,8 +171,7 @@ class MultilingualSelfDistillationDataCollator:
             problem_en = feature.get("problem_en", feature["problem"])
             solution_en = feature["solution"]
             problem_target = self._get_problem_for_lang(feature, lang_code)
-            
-        
+
             teacher_context = self._build_teacher_privileged_context(
                 labels=labels,
                 problem_target=problem_target,
@@ -186,20 +193,23 @@ class MultilingualSelfDistillationDataCollator:
                 tokenize=False,
                 add_generation_prompt=False,
             )
-            
+
             if self.student_enable_thinking:
-                student_prompt = self._append_qwen3_think_prefix(student_base_prompt, lang_code)
+                student_prompt = self._append_qwen3_think_prefix(
+                    student_base_prompt, lang_code
+                )
             else:
-                student_prompt = self._append_qwen3_assistant_prefix(student_base_prompt)
-                
+                student_prompt = self._append_qwen3_assistant_prefix(
+                    student_base_prompt
+                )
+
             student_prompts.append(student_prompt)
             # -------------------------
             # Teacher prompt(s)
             # -------------------------
             if self.reason_first:
                 teacher_reasoning_user_message = (
-                    f"{teacher_context}\n\n"
-                    f"{lang_cfg['reason_first_prompt']}"
+                    f"{teacher_context}\n\n{lang_cfg['reason_first_prompt']}"
                 )
 
                 teacher_reasoning_messages = [
@@ -215,16 +225,13 @@ class MultilingualSelfDistillationDataCollator:
                 )
                 teacher_reasoning_prompts.append(teacher_reasoning_prompt)
 
-                teacher_transition_text = (
-                    f"\n{self._get_teacher_instruction(lang_cfg)}"
-                )
+                teacher_transition_text = f"\n{self._get_teacher_instruction(lang_cfg)}"
                 teacher_transition_texts.append(teacher_transition_text)
 
                 teacher_prompts.append("")  # placeholder for compatibility
             else:
                 teacher_user_message = (
-                    f"{teacher_context}\n\n"
-                    f"{self._get_teacher_instruction(lang_cfg)}"
+                    f"{teacher_context}\n\n{self._get_teacher_instruction(lang_cfg)}"
                 )
 
                 teacher_messages = [{"role": "user", "content": teacher_user_message}]
@@ -233,21 +240,25 @@ class MultilingualSelfDistillationDataCollator:
                     tokenize=False,
                     add_generation_prompt=False,
                 )
-                teacher_prompt = self._append_qwen3_think_prefix(teacher_base_prompt, lang_code)
+                teacher_prompt = self._append_qwen3_think_prefix(
+                    teacher_base_prompt, lang_code
+                )
                 teacher_prompts.append(teacher_prompt)
 
         # -------------------------
         # Student tokenization
         # -------------------------
-        student_encoded, student_prompt_lengths, max_student_prompt_len = self._tokenize_with_batch_max(
-            student_prompts
+        student_encoded, student_prompt_lengths, max_student_prompt_len = (
+            self._tokenize_with_batch_max(student_prompts)
         )
 
         result = {
             "student_prompts": student_encoded["input_ids"],
             "student_prompt_attention_mask": student_encoded["attention_mask"],
             "student_prompt_length": max_student_prompt_len,
-            "student_prompt_lengths_per_example": torch.tensor(student_prompt_lengths, dtype=torch.long),
+            "student_prompt_lengths_per_example": torch.tensor(
+                student_prompt_lengths, dtype=torch.long
+            ),
             "lang_codes": lang_codes,
         }
 
@@ -255,24 +266,28 @@ class MultilingualSelfDistillationDataCollator:
         # Teacher tokenization
         # -------------------------
         if self.reason_first:
-            reasoning_encoded, reasoning_prompt_lengths, max_reasoning_prompt_len = self._tokenize_with_batch_max(
-                teacher_reasoning_prompts
+            reasoning_encoded, reasoning_prompt_lengths, max_reasoning_prompt_len = (
+                self._tokenize_with_batch_max(teacher_reasoning_prompts)
             )
 
-            transition_encoded, transition_lengths, max_transition_len = self._tokenize_with_batch_max(
-                teacher_transition_texts
+            transition_encoded, transition_lengths, max_transition_len = (
+                self._tokenize_with_batch_max(teacher_transition_texts)
             )
 
             result.update(
                 {
                     "teacher_reasoning_prompts": reasoning_encoded["input_ids"],
-                    "teacher_reasoning_attention_mask": reasoning_encoded["attention_mask"],
+                    "teacher_reasoning_attention_mask": reasoning_encoded[
+                        "attention_mask"
+                    ],
                     "teacher_reasoning_prompt_length": max_reasoning_prompt_len,
                     "teacher_reasoning_prompt_lengths_per_example": torch.tensor(
                         reasoning_prompt_lengths, dtype=torch.long
                     ),
                     "teacher_transition_tokens": transition_encoded["input_ids"],
-                    "teacher_transition_attention_mask": transition_encoded["attention_mask"],
+                    "teacher_transition_attention_mask": transition_encoded[
+                        "attention_mask"
+                    ],
                     "teacher_transition_length": max_transition_len,
                     "teacher_transition_lengths_per_example": torch.tensor(
                         transition_lengths, dtype=torch.long
@@ -280,8 +295,8 @@ class MultilingualSelfDistillationDataCollator:
                 }
             )
         else:
-            teacher_encoded, teacher_prompt_lengths, max_teacher_prompt_len = self._tokenize_with_batch_max(
-                teacher_prompts
+            teacher_encoded, teacher_prompt_lengths, max_teacher_prompt_len = (
+                self._tokenize_with_batch_max(teacher_prompts)
             )
 
             result.update(
